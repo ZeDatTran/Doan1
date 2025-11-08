@@ -1,0 +1,579 @@
+2025-11-08 21:10:33,331 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:10:33,390 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.52.219:5000
+2025-11-08 21:10:33,390 - INFO - [33mPress CTRL+C to quit[0m
+2025-11-08 21:10:33,986 - INFO - JWT_TOKEN is valid
+2025-11-08 21:10:33,990 - INFO - JWT_TOKEN is valid
+2025-11-08 21:10:34,170 - INFO - Websocket connected
+2025-11-08 21:10:34,171 - INFO - WebSocket connection opened, subscribing to device group...
+2025-11-08 21:10:34,481 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:10:34,634 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:10:34,635 - INFO - WebSocket: Subscribed to 3 devices.
+2025-11-08 21:10:34,683 - INFO - Real-time attribute for b1adb710-af7d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:10:34,686 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:10:34,687 - INFO - Real-time telemetry for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:10:34,691 - INFO - Real-time attribute for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:10:34,691 - INFO - Real-time telemetry for b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:10:34,694 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.205', 'ENERGY-Power': '46', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:10:34,887 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:10:35,350 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:35,876 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:10:36,307 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:36,926 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.205', 'ENERGY-Power': '46', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:10:37,398 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:37,608 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.213', 'ENERGY-Power': '62', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.9'}
+2025-11-08 21:10:47,445 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '35', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.62'}
+2025-11-08 21:10:47,500 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:10:47,890 - INFO - JWT_TOKEN is valid
+2025-11-08 21:10:48,312 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:10:48,675 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:10:49,174 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:49,723 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:10:50,234 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:50,871 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '35', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.62'}
+2025-11-08 21:10:51,376 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:10:53,584 - INFO - Yêu c\u1ea7u \u0111i\u1ec1u khi\u1ec3n: Device be386340-a84d-11f0-b5f4-25fce636d3ff, L\u1ec7nh: off
+2025-11-08 21:10:54,107 - INFO - JWT_TOKEN is valid
+2025-11-08 21:10:54,795 - INFO - Da gui lenh RPC 'OFF' toi be386340-a84d-11f0-b5f4-25fce636d3ff thanh cong.
+2025-11-08 21:10:54,797 - INFO - 127.0.0.1 - - [08/Nov/2025 21:10:54] "POST /control/be386340-a84d-11f0-b5f4-25fce636d3ff/off HTTP/1.1" 200 -
+2025-11-08 21:10:55,133 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = OFF
+2025-11-08 21:10:57,473 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:01,479 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:11:02,025 - INFO - JWT_TOKEN is valid
+2025-11-08 21:11:02,502 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:11:02,945 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:11:03,396 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:04,001 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:11:04,425 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:04,929 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:05,370 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:11:07,546 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:15,471 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:11:15,870 - INFO - JWT_TOKEN is valid
+2025-11-08 21:11:16,270 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:11:16,680 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:11:17,126 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:17,571 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:17,599 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:11:18,047 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:18,520 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:18,916 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:11:27,506 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:29,020 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:11:29,432 - INFO - JWT_TOKEN is valid
+2025-11-08 21:11:29,793 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:11:30,393 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:11:30,870 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:31,406 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:11:31,850 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:32,367 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:32,986 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:11:37,668 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:43,089 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:11:43,528 - INFO - JWT_TOKEN is valid
+2025-11-08 21:11:43,968 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:11:44,385 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:11:44,850 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:45,395 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:11:45,880 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:46,385 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:46,891 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:11:47,473 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:56,993 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:11:57,425 - INFO - JWT_TOKEN is valid
+2025-11-08 21:11:57,587 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:11:57,829 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:11:58,208 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:11:58,709 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:11:59,249 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:11:59,666 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:00,199 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:00,667 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:12:01,337 - INFO - Yêu c\u1ea7u \u0111i\u1ec1u khi\u1ec3n: Device be386340-a84d-11f0-b5f4-25fce636d3ff, L\u1ec7nh: off
+2025-11-08 21:12:01,787 - INFO - JWT_TOKEN is valid
+2025-11-08 21:12:02,207 - INFO - Da gui lenh RPC 'OFF' toi be386340-a84d-11f0-b5f4-25fce636d3ff thanh cong.
+2025-11-08 21:12:02,209 - INFO - 127.0.0.1 - - [08/Nov/2025 21:12:02] "POST /control/be386340-a84d-11f0-b5f4-25fce636d3ff/off HTTP/1.1" 200 -
+2025-11-08 21:12:07,510 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:10,770 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:12:11,169 - INFO - JWT_TOKEN is valid
+2025-11-08 21:12:11,585 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:12:12,004 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:12:12,440 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:12,987 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:12:13,368 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:13,930 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:14,370 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:12:17,519 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:24,473 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:12:24,868 - INFO - JWT_TOKEN is valid
+2025-11-08 21:12:25,271 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:12:25,645 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:12:26,041 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:26,547 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:12:26,977 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:27,435 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:27,545 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:27,824 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:12:37,545 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:37,927 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:12:38,346 - INFO - JWT_TOKEN is valid
+2025-11-08 21:12:38,790 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:12:39,309 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:12:39,802 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:40,366 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:12:40,765 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:41,283 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:41,729 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:12:47,490 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:51,832 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:12:52,224 - INFO - JWT_TOKEN is valid
+2025-11-08 21:12:52,667 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:12:53,118 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:12:53,532 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:54,025 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:12:54,443 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:12:54,958 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:12:55,357 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:12:57,495 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:14:47,334 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:14:47,372 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.52.219:5000
+2025-11-08 21:14:47,372 - INFO - [33mPress CTRL+C to quit[0m
+2025-11-08 21:14:47,931 - INFO - JWT_TOKEN is valid
+2025-11-08 21:14:47,931 - INFO - JWT_TOKEN is valid
+2025-11-08 21:14:48,106 - INFO - Websocket connected
+2025-11-08 21:14:48,106 - INFO - WebSocket connection opened, subscribing to device group...
+2025-11-08 21:14:48,365 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:14:48,565 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:14:48,566 - INFO - WebSocket: Subscribed to 3 devices.
+2025-11-08 21:14:48,602 - INFO - Real-time attribute for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:14:48,603 - INFO - Real-time attribute for b1adb710-af7d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:14:48,603 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:14:48,607 - INFO - Real-time telemetry for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:14:48,609 - INFO - Real-time telemetry for b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:14:48,609 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.189', 'ENERGY-Power': '55', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.89'}
+2025-11-08 21:14:48,787 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:14:49,313 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:14:49,872 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:14:50,336 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:14:51,141 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.189', 'ENERGY-Power': '55', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.89'}
+2025-11-08 21:14:51,577 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:14:57,553 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.169', 'ENERGY-Power': '40', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.73'}
+2025-11-08 21:15:01,679 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:15:02,168 - INFO - JWT_TOKEN is valid
+2025-11-08 21:15:02,609 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:15:03,011 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:15:03,465 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:03,998 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:15:04,444 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:05,042 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.169', 'ENERGY-Power': '40', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.73'}
+2025-11-08 21:15:05,531 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:07,574 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.173', 'ENERGY-Power': '36', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:15:15,633 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:15:16,232 - INFO - JWT_TOKEN is valid
+2025-11-08 21:15:16,984 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:15:17,489 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:15:17,794 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.196', 'ENERGY-Power': '52', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.82'}
+2025-11-08 21:15:18,239 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:18,992 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:15:19,545 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:20,069 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.196', 'ENERGY-Power': '52', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.82'}
+2025-11-08 21:15:20,511 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:27,505 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.177', 'ENERGY-Power': '37', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:15:30,613 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:15:31,007 - INFO - JWT_TOKEN is valid
+2025-11-08 21:15:31,483 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:15:31,945 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:15:32,475 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:33,046 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:15:33,498 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:33,994 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.177', 'ENERGY-Power': '37', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:15:34,445 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:37,532 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.149', 'ENERGY-Power': '31', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:15:44,547 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:15:44,968 - INFO - JWT_TOKEN is valid
+2025-11-08 21:15:45,374 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:15:45,772 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:15:46,196 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:46,675 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:15:47,117 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:47,547 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.183', 'ENERGY-Power': '42', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.71'}
+2025-11-08 21:15:47,635 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.183', 'ENERGY-Power': '42', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.71'}
+2025-11-08 21:15:48,065 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:15:57,555 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.167', 'ENERGY-Power': '35', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:15:58,167 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:15:58,612 - INFO - JWT_TOKEN is valid
+2025-11-08 21:15:58,985 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:15:59,410 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:15:59,846 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:00,362 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:16:00,825 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:01,387 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.167', 'ENERGY-Power': '35', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.64'}
+2025-11-08 21:16:01,837 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:07,624 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.168', 'ENERGY-Power': '37', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:16:11,940 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:16:12,348 - INFO - JWT_TOKEN is valid
+2025-11-08 21:16:12,830 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:16:13,370 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:16:13,859 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:14,364 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:16:14,914 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:15,464 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.168', 'ENERGY-Power': '37', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:16:15,980 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:17,545 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.185', 'ENERGY-Power': '44', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.73'}
+2025-11-08 21:16:26,082 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:16:26,509 - INFO - JWT_TOKEN is valid
+2025-11-08 21:16:26,962 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:16:27,432 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:16:27,562 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.24', 'ENERGY-Power': '52', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.66'}
+2025-11-08 21:16:27,832 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:28,441 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:16:28,947 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:29,445 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.24', 'ENERGY-Power': '52', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.66'}
+2025-11-08 21:16:29,852 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:37,489 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '39', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:16:39,954 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:16:40,424 - INFO - JWT_TOKEN is valid
+2025-11-08 21:16:40,791 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:16:41,205 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:16:41,694 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:42,225 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:16:42,675 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:43,184 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '39', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:16:43,635 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:47,506 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.182', 'ENERGY-Power': '41', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.7'}
+2025-11-08 21:16:53,737 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:16:54,109 - INFO - JWT_TOKEN is valid
+2025-11-08 21:16:54,537 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:16:54,947 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:16:55,384 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:55,922 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:16:56,336 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:56,824 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.182', 'ENERGY-Power': '41', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.7'}
+2025-11-08 21:16:57,244 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:16:57,515 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.216', 'ENERGY-Power': '49', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.7'}
+2025-11-08 21:17:07,346 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:17:07,544 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.175', 'ENERGY-Power': '38', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:17:07,746 - INFO - JWT_TOKEN is valid
+2025-11-08 21:17:08,132 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:17:08,517 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:17:08,965 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:09,504 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:17:09,947 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:10,439 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.175', 'ENERGY-Power': '38', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:17:10,904 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:17,474 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '39', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:17:21,006 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:17:21,410 - INFO - JWT_TOKEN is valid
+2025-11-08 21:17:21,809 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:17:22,280 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:17:22,747 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:23,248 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:17:23,677 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:24,227 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '324', 'ENERGY-Current': '0.176', 'ENERGY-Power': '39', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:17:24,632 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:27,434 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.171', 'ENERGY-Power': '38', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.69'}
+2025-11-08 21:17:34,734 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:17:35,133 - INFO - JWT_TOKEN is valid
+2025-11-08 21:17:35,513 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:17:35,927 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:17:36,354 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:36,904 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:17:37,319 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:37,605 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.212', 'ENERGY-Power': '51', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.75'}
+2025-11-08 21:17:37,836 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.212', 'ENERGY-Power': '51', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.75'}
+2025-11-08 21:17:38,265 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:47,516 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.182', 'ENERGY-Power': '41', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.7'}
+2025-11-08 21:17:48,367 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:17:48,796 - INFO - JWT_TOKEN is valid
+2025-11-08 21:17:49,208 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:17:49,976 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:17:50,388 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:50,906 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:17:51,351 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:51,963 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.182', 'ENERGY-Power': '41', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.7'}
+2025-11-08 21:17:52,391 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:17:57,543 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.17', 'ENERGY-Power': '37', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:18:02,493 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:18:02,929 - INFO - JWT_TOKEN is valid
+2025-11-08 21:18:03,385 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:18:03,836 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:18:04,276 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:04,864 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:18:05,311 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:05,984 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.17', 'ENERGY-Power': '37', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.67'}
+2025-11-08 21:18:06,395 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:07,546 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.237', 'ENERGY-Power': '44', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '0.57'}
+2025-11-08 21:18:16,498 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:18:16,893 - INFO - JWT_TOKEN is valid
+2025-11-08 21:18:17,386 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:18:17,472 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.174', 'ENERGY-Power': '70', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '1.0'}
+2025-11-08 21:18:17,923 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:18:18,384 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:18,918 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:18:19,363 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:20,028 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.174', 'ENERGY-Power': '70', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '1.0'}
+2025-11-08 21:18:20,503 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:27,506 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '322', 'ENERGY-Current': '0.148', 'ENERGY-Power': '37', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '0.77'}
+2025-11-08 21:18:30,606 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:18:30,984 - INFO - JWT_TOKEN is valid
+2025-11-08 21:18:31,440 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:18:31,966 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:18:32,370 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:18:32,960 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:18:33,364 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:38,561 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:54:38,600 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.52.219:5000
+2025-11-08 21:54:38,601 - INFO - [33mPress CTRL+C to quit[0m
+2025-11-08 21:54:39,144 - INFO - JWT_TOKEN is valid
+2025-11-08 21:54:39,148 - INFO - JWT_TOKEN is valid
+2025-11-08 21:54:39,219 - INFO - Websocket connected
+2025-11-08 21:54:39,219 - INFO - WebSocket connection opened, subscribing to device group...
+2025-11-08 21:54:39,624 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:54:39,661 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:54:39,663 - INFO - WebSocket: Subscribed to 3 devices.
+2025-11-08 21:54:39,677 - INFO - Real-time attribute for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:54:39,677 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:54:39,684 - INFO - Real-time attribute for b1adb710-af7d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:54:39,684 - INFO - Real-time telemetry for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:54:39,686 - INFO - Real-time telemetry for b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:54:39,687 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:54:39,961 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:54:40,314 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:40,755 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:54:41,100 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:41,525 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:54:41,865 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:51,967 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:54:52,304 - INFO - JWT_TOKEN is valid
+2025-11-08 21:54:52,615 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:54:52,947 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:54:53,282 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:53,717 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:54:54,066 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:54:54,507 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:54:54,844 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:04,946 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:55:05,297 - INFO - JWT_TOKEN is valid
+2025-11-08 21:55:05,648 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:55:05,991 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:55:06,361 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:06,834 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:55:07,200 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:07,642 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:55:07,977 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:18,079 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:55:18,477 - INFO - JWT_TOKEN is valid
+2025-11-08 21:55:18,812 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:55:19,149 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:55:19,487 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:19,943 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:55:20,292 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:20,763 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:55:21,134 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:31,236 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:55:31,601 - INFO - JWT_TOKEN is valid
+2025-11-08 21:55:32,085 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:55:32,549 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:55:33,004 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:33,458 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:55:33,861 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:34,360 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:55:34,766 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:44,869 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:55:45,206 - INFO - JWT_TOKEN is valid
+2025-11-08 21:55:45,508 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:55:45,833 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:55:46,172 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:46,593 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:55:46,920 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:47,343 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:55:47,681 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:55:57,783 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:55:58,173 - INFO - JWT_TOKEN is valid
+2025-11-08 21:55:58,783 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:55:59,362 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:55:59,872 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:00,512 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:01,033 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:01,619 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '323', 'ENERGY-Current': '0.157', 'ENERGY-Power': '35', 'ENERGY-Today': '0.015', 'ENERGY-Total': '0.016', 'ENERGY-Factor': '0.68'}
+2025-11-08 21:56:02,313 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:12,416 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:56:13,078 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:13,562 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:14,091 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:56:14,587 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:15,213 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:15,780 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:16,399 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.681', 'ENERGY-Power': '182', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.001', 'ENERGY-Factor': '0.84'}
+2025-11-08 21:56:16,953 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:19,265 - ERROR - WebSocket error: ping/pong timed out
+2025-11-08 21:56:19,265 - ERROR - ping/pong timed out - goodbye
+2025-11-08 21:56:22,267 - WARNING - WebSocket closed: Status None, Message: None
+2025-11-08 21:56:22,267 - INFO - WebSocket connection closed. Retrying in 30 seconds...
+2025-11-08 21:56:27,055 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:56:27,590 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:28,105 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:28,554 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:56:28,761 - INFO - Yêu c\u1ea7u \u0111i\u1ec1u khi\u1ec3n NHÓM: L\u1ec7nh: off
+2025-11-08 21:56:29,158 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:29,305 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:29,844 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:29,958 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:30,373 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:30,928 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.623', 'ENERGY-Power': '165', 'ENERGY-Today': '0.001', 'ENERGY-Total': '0.002', 'ENERGY-Factor': '0.84'}
+2025-11-08 21:56:31,398 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:35,399 - ERROR - Loi ket noi khi gui RPC toi 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: HTTPSConnectionPool(host='app.coreiot.io', port=443): Read timed out. (read timeout=5)
+2025-11-08 21:56:40,895 - ERROR - Loi ket noi khi gui RPC toi b1adb710-af7d-11f0-b5f4-25fce636d3ff: HTTPSConnectionPool(host='app.coreiot.io', port=443): Read timed out. (read timeout=5)
+2025-11-08 21:56:41,475 - INFO - Da gui lenh RPC 'OFF' toi be386340-a84d-11f0-b5f4-25fce636d3ff thanh cong.
+2025-11-08 21:56:41,500 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:56:41,576 - INFO - 127.0.0.1 - - [08/Nov/2025 21:56:41] "[35m[1mPOST /control/group/off HTTP/1.1[0m" 207 -
+2025-11-08 21:56:42,194 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:42,765 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:43,390 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:56:43,935 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:44,645 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:45,224 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:45,933 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.575', 'ENERGY-Power': '151', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.82'}
+2025-11-08 21:56:46,533 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:56:48,427 - INFO - Yêu c\u1ea7u \u0111i\u1ec1u khi\u1ec3n NHÓM: L\u1ec7nh: on
+2025-11-08 21:56:48,981 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:49,506 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:52,781 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:52,986 - INFO - Websocket connected
+2025-11-08 21:56:52,987 - INFO - WebSocket connection opened, subscribing to device group...
+2025-11-08 21:56:53,458 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:53,459 - INFO - WebSocket: Subscribed to 3 devices.
+2025-11-08 21:56:53,536 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = OFF
+2025-11-08 21:56:53,536 - INFO - Real-time attribute for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:56:53,536 - INFO - Real-time attribute for b1adb710-af7d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:56:53,537 - INFO - Real-time telemetry for 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:56:53,537 - INFO - Real-time telemetry for b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:53,540 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:56:54,942 - ERROR - Loi ket noi khi gui RPC toi 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: HTTPSConnectionPool(host='app.coreiot.io', port=443): Read timed out. (read timeout=5)
+2025-11-08 21:56:56,636 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:56:57,119 - INFO - JWT_TOKEN is valid
+2025-11-08 21:56:57,670 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:56:57,670 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:56:58,153 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:56:58,637 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:56:59,234 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:56:59,752 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:00,421 - ERROR - Loi ket noi khi gui RPC toi b1adb710-af7d-11f0-b5f4-25fce636d3ff: HTTPSConnectionPool(host='app.coreiot.io', port=443): Read timed out. (read timeout=5)
+2025-11-08 21:57:00,476 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '0', 'ENERGY-Current': '0.0', 'ENERGY-Power': '0', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.0'}
+2025-11-08 21:57:01,091 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: OFF
+2025-11-08 21:57:01,139 - INFO - Da gui lenh RPC 'ON' toi be386340-a84d-11f0-b5f4-25fce636d3ff thanh cong.
+2025-11-08 21:57:01,241 - INFO - 127.0.0.1 - - [08/Nov/2025 21:57:01] "[35m[1mPOST /control/group/on HTTP/1.1[0m" 207 -
+2025-11-08 21:57:01,587 - INFO - Real-time attribute for be386340-a84d-11f0-b5f4-25fce636d3ff: POWER = ON
+2025-11-08 21:57:07,791 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.688', 'ENERGY-Power': '182', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:57:11,193 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:57:11,726 - INFO - JWT_TOKEN is valid
+2025-11-08 21:57:12,195 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:57:12,695 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:57:13,178 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:13,789 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:57:14,405 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:15,039 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.688', 'ENERGY-Power': '182', 'ENERGY-Today': '0.002', 'ENERGY-Total': '0.003', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:57:15,515 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:17,676 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.647', 'ENERGY-Power': '174', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.85'}
+2025-11-08 21:57:25,617 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:57:26,079 - INFO - JWT_TOKEN is valid
+2025-11-08 21:57:26,496 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:57:27,038 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:57:27,565 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:27,924 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '319', 'ENERGY-Current': '0.602', 'ENERGY-Power': '159', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:57:28,182 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:57:28,723 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:29,366 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '319', 'ENERGY-Current': '0.602', 'ENERGY-Power': '159', 'ENERGY-Today': '0.003', 'ENERGY-Total': '0.004', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:57:29,918 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:37,737 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.581', 'ENERGY-Power': '150', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.81'}
+2025-11-08 21:57:40,020 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:57:40,534 - INFO - JWT_TOKEN is valid
+2025-11-08 21:57:41,073 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:57:41,627 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:57:42,144 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:42,752 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:57:43,280 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:43,911 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.581', 'ENERGY-Power': '150', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.81'}
+2025-11-08 21:57:44,422 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:47,637 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.596', 'ENERGY-Power': '157', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:57:54,524 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:57:55,041 - INFO - JWT_TOKEN is valid
+2025-11-08 21:57:55,632 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:57:56,178 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:57:56,666 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:57,191 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:57:57,672 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.57', 'ENERGY-Power': '145', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:57:57,672 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:57:58,303 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.57', 'ENERGY-Power': '145', 'ENERGY-Today': '0.004', 'ENERGY-Total': '0.005', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:57:58,895 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:07,767 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.579', 'ENERGY-Power': '146', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:58:08,997 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:58:09,682 - INFO - JWT_TOKEN is valid
+2025-11-08 21:58:10,424 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:58:10,987 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:58:11,597 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:12,463 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:58:12,964 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:13,596 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.579', 'ENERGY-Power': '146', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:58:14,102 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:17,696 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.576', 'ENERGY-Power': '137', 'ENERGY-Today': '0.005', 'ENERGY-Total': '0.006', 'ENERGY-Factor': '0.75'}
+2025-11-08 21:58:24,204 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:58:24,797 - INFO - JWT_TOKEN is valid
+2025-11-08 21:58:25,364 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:58:25,905 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:58:26,379 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:27,014 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:58:27,534 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:27,633 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.533', 'ENERGY-Power': '145', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.86'}
+2025-11-08 21:58:28,218 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.533', 'ENERGY-Power': '145', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.86'}
+2025-11-08 21:58:28,762 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:37,757 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.528', 'ENERGY-Power': '136', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.81'}
+2025-11-08 21:58:38,865 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:58:39,353 - INFO - JWT_TOKEN is valid
+2025-11-08 21:58:39,817 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:58:40,362 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:58:40,933 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:41,452 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:58:41,875 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:42,496 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.528', 'ENERGY-Power': '136', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.81'}
+2025-11-08 21:58:43,026 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:47,737 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.518', 'ENERGY-Power': '136', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:58:53,129 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:58:53,643 - INFO - JWT_TOKEN is valid
+2025-11-08 21:58:54,141 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:58:54,618 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:58:55,097 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:55,707 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:58:56,298 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:56,951 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.518', 'ENERGY-Power': '136', 'ENERGY-Today': '0.006', 'ENERGY-Total': '0.007', 'ENERGY-Factor': '0.83'}
+2025-11-08 21:58:57,588 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:58:57,658 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.56', 'ENERGY-Power': '142', 'ENERGY-Today': '0.007', 'ENERGY-Total': '0.008', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:59:07,691 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:59:07,702 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.505', 'ENERGY-Power': '131', 'ENERGY-Today': '0.007', 'ENERGY-Total': '0.008', 'ENERGY-Factor': '0.82'}
+2025-11-08 21:59:08,311 - INFO - JWT_TOKEN is valid
+2025-11-08 21:59:08,798 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:59:09,279 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:59:09,774 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:10,523 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:59:11,022 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:11,634 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '317', 'ENERGY-Current': '0.505', 'ENERGY-Power': '131', 'ENERGY-Today': '0.007', 'ENERGY-Total': '0.008', 'ENERGY-Factor': '0.82'}
+2025-11-08 21:59:12,162 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:17,796 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.508', 'ENERGY-Power': '129', 'ENERGY-Today': '0.007', 'ENERGY-Total': '0.008', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:59:22,264 - INFO - Periodic check: Starting data fetch cycle for group
+2025-11-08 21:59:22,797 - INFO - JWT_TOKEN is valid
+2025-11-08 21:59:23,325 - INFO - Found 3 devices in group 9fba6920-97c9-11f0-a934-bb34844744f7
+2025-11-08 21:59:23,773 - INFO - Telemetry received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.108', 'ENERGY-Power': '17', 'ENERGY-Today': '0.077', 'ENERGY-Total': '0.157', 'ENERGY-Factor': '0.49'}
+2025-11-08 21:59:24,351 - INFO - POWER attribute received for device 4e6ac130-af7c-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:24,978 - INFO - Telemetry received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '321', 'ENERGY-Current': '0.396', 'ENERGY-Power': '96', 'ENERGY-Today': '0.0', 'ENERGY-Total': '0.156', 'ENERGY-Factor': '0.76'}
+2025-11-08 21:59:25,522 - INFO - POWER attribute received for device b1adb710-af7d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:26,093 - INFO - Telemetry received for device be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '318', 'ENERGY-Current': '0.508', 'ENERGY-Power': '129', 'ENERGY-Today': '0.007', 'ENERGY-Total': '0.008', 'ENERGY-Factor': '0.8'}
+2025-11-08 21:59:26,658 - INFO - POWER attribute received for device be386340-a84d-11f0-b5f4-25fce636d3ff: ON
+2025-11-08 21:59:27,712 - INFO - Real-time telemetry for be386340-a84d-11f0-b5f4-25fce636d3ff: {'ENERGY-Voltage': '319', 'ENERGY-Current': '0.514', 'ENERGY-Power': '137', 'ENERGY-Today': '0.008', 'ENERGY-Total': '0.009', 'ENERGY-Factor': '0.83'}
