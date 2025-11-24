@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { StatCard } from "@/components/dashboard/stat-card";
 import { DeviceStatusCard } from "@/components/dashboard/device-status-card";
 import { Icons } from "@/components/icons";
-import { fetchDevices, toggleDevice, type Device } from "@/lib/api";
+import { fetchDevices, type Device } from "@/lib/api";
 
 export default function DashboardPage() {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -19,11 +19,6 @@ export default function DashboardPage() {
     const data = await fetchDevices();
     setDevices(data);
     setLoading(false);
-  };
-
-  const handleToggleDevice = async (deviceId: string, isOn: boolean) => {
-    await toggleDevice(deviceId, isOn);
-    setDevices(devices.map((d) => (d.id === deviceId ? { ...d, isOn } : d)));
   };
 
   const onlineDevices = devices.filter((d) => d.status === "online").length;
@@ -88,7 +83,6 @@ export default function DashboardPage() {
             <DeviceStatusCard
               key={device.id}
               device={device}
-              onToggle={handleToggleDevice}
             />
           ))}
         </div>

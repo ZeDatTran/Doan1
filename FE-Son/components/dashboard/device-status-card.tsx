@@ -7,11 +7,10 @@ import type { Device } from "@/lib/api";
 import { cn } from "@/lib/utils";
 
 interface DeviceStatusCardProps {
-  device: Device;
-  onToggle: (deviceId: string, isOn: boolean) => void;
+  device: Device
 }
 
-export function DeviceStatusCard({ device, onToggle }: DeviceStatusCardProps) {
+export function DeviceStatusCard({ device }: DeviceStatusCardProps) {
   const DeviceIcon = Icons[device.type];
 
   return (
