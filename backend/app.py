@@ -8,8 +8,10 @@ from dotenv import load_dotenv
 import os
 import time
 import threading
+from flask_cors import CORS  # import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Tải biến môi trường từ .env
 load_dotenv()
@@ -38,6 +40,10 @@ logging.basicConfig(
 # Telemetry keys từ smart plug
 TELEMETRY_KEYS = ["ENERGY-Voltage", "ENERGY-Current", "ENERGY-Power", "ENERGY-Today",
                   "ENERGY-Total", "ENERGY-Factor"]
+
+# Danh sách type và location cho devices (theo thứ tự)
+DEVICE_TYPES = ["light", "fan", "ac", "sensor", "camera"]
+DEVICE_LOCATIONS = ["Phòng khách", "Phòng ngủ", "Phòng làm việc", "Phòng ăn", "Ban công"]
 
 # Lưu trữ dữ liệu mới nhất (hỗ trợ nhiều devices)
 latest_data = {}
@@ -169,7 +175,7 @@ def send_rpc_to_device(device_id, command):
         "params": command.upper()
     }
     
-    try:
+    try:        
         
         response = requests.post(api_url, headers=HEADERS, json=payload, timeout=5)
         
@@ -331,8 +337,14 @@ def check_data():
             get_device_attributes(device_id)
             
     data_array = []
-    for device_id, info in latest_data.items():
+    for idx, (device_id, info) in enumerate(latest_data.items()):
+        # Gán type và location theo thứ tự, reset khi hết giá trị
+        device_type = DEVICE_TYPES[idx % len(DEVICE_TYPES)]
+        device_location = DEVICE_LOCATIONS[idx % len(DEVICE_LOCATIONS)]
+        
         data_array.append({
+            "type": device_type,
+            "location": device_location,
             "id": device_id,
             "attributes": info.get("attributes", {}),
             "telemetry": info.get("telemetry", {})
