@@ -13,10 +13,10 @@ export function DeviceTable() {
 
   const filteredDevices = devices?.filter((device) => !selectedAreaId || device.areaId === selectedAreaId) || []
 
-  const handleTogglePower = (deviceId: string, currentPower: number) => {
+  const handleTogglePower = (deviceId: string, isCurrentlyOn: boolean) => {
     setUpdatingId(deviceId)
     updateDevice(
-      { id: deviceId, power: currentPower === 0 ? 1 : 0 },
+      { id: deviceId, power: isCurrentlyOn ? 0 : 1 },
       {
         onSettled: () => setUpdatingId(null),
       }
@@ -66,7 +66,7 @@ export function DeviceTable() {
                   <td className="px-6 py-4 text-sm text-gray-900">{device.telemetry?.["ENERGY-Power"] || "N/A"}</td>
                   <td className="px-6 py-4 text-sm">
                     <button
-                      onClick={() => handleTogglePower(device.id, device.attributes?.POWER === "ON" ? 1 : 0)}
+                      onClick={() => handleTogglePower(device.id, device.attributes?.POWER === "ON")}
                       disabled={updatingId === device.id || isPending}
                       className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg font-medium transition-colors disabled:opacity-50 ${
                         device.attributes?.POWER === "ON"

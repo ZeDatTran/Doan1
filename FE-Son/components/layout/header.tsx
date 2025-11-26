@@ -89,23 +89,23 @@ export function Header() {
           >
             Dashboard
           </Link>
-          {/* <Link
-            href="/devices"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Thiết bị
-          </Link> */}
-          {/* <Link
-            href="/scheduling"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Lập lịch
-          </Link> */}
           <Link
             href="/energy"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Energy
+          </Link>
+          <Link
+            href="/monitor"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Monitor
+          </Link>
+          <Link
+            href="/schedules"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Schedules
           </Link>
         </nav>
 

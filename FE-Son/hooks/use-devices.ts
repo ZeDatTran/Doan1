@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { fetchDevices, controlDevice } from "@/lib/api-client"
 import type { Device as BackendDevice } from "@/lib/api-client"
 
@@ -25,7 +25,9 @@ export function useDevices() {
         attributes: device.attributes,
         telemetry: device.telemetry,
         // Add UI-specific fields
-        name: device.location || `Device ${index + 1}`,
+        name: device.type && device.location 
+          ? `${device.type.charAt(0).toUpperCase() + device.type.slice(1)} - ${device.location}`
+          : device.type || `Device ${index + 1}`,
         areaId: device.location,
         groupId: "",
         status: device.attributes?.POWER === "ON" ? "online" : "offline",
@@ -68,10 +70,16 @@ export function useDeviceTree() {
 }
 
 export function useUpdateDevice() {
+  const queryClient = useQueryClient()
+  
   return useMutation({
     mutationFn: async (data: { id: string; power: number }) => {
       const command = data.power === 0 ? "off" : "on"
       return controlDevice(data.id, command as "on" | "off")
+    },
+    onSuccess: () => {
+      // Invalidate the devices query to refetch updated data
+      queryClient.invalidateQueries({ queryKey: ["devices"] })
     },
   })
 }

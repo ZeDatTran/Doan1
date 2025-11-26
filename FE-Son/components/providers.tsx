@@ -3,6 +3,7 @@
 import type { ReactNode } from "react"
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
 import { SocketProvider } from "./socket-provider"
+import { ThemeProvider } from "./theme-provider"
 
 // Create a client
 const queryClient = new QueryClient()
@@ -10,7 +11,11 @@ const queryClient = new QueryClient()
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <SocketProvider>{children}</SocketProvider>
+      <SocketProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
+      </SocketProvider>
     </QueryClientProvider>
   )
 }

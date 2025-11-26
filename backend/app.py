@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_socketio import SocketIO, emit, join_room, leave_room
 import requests
 import websocket
 import json
@@ -12,6 +13,7 @@ from flask_cors import CORS  # import CORS
 
 app = Flask(__name__)
 CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Tải biến môi trường từ .env
 load_dotenv()
@@ -58,7 +60,7 @@ def verify_token():
         response = requests.get(
             f"{CORE_IOT_URL}/api/auth/user",
             headers=HEADERS,
-            timeout=5
+            timeout=10
         )
         response.raise_for_status()
         logging.info("JWT_TOKEN is valid")
@@ -70,7 +72,7 @@ def verify_token():
 def get_devices_from_group():
     try:
         url = f"{CORE_IOT_URL}/api/tenant/devices?pageSize=100&page=0&groupId={GROUP_ID}"
-        response = requests.get(url, headers=HEADERS, timeout=5)
+        response = requests.get(url, headers=HEADERS, timeout=15)
         response.raise_for_status()
         devices_data = response.json().get("data", [])
         
@@ -94,7 +96,7 @@ def get_devices_from_group():
         try:
             response = requests.get(
                 f"{CORE_IOT_URL}/api/tenant/devices?pageSize=100&page=0",
-                headers=HEADERS, timeout=5
+                headers=HEADERS, timeout=15
             )
             response.raise_for_status()
             devices = response.json()["data"]
@@ -112,7 +114,7 @@ def get_device_telemetry(device_id):
         response = requests.get(
             f"{CORE_IOT_URL}/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries?keys={','.join(TELEMETRY_KEYS)}&limit=1",
             headers=HEADERS,
-            timeout=5
+            timeout=15
         )
         response.raise_for_status()
         telemetry = response.json()
@@ -143,7 +145,7 @@ def get_device_attributes(device_id):
         response = requests.get(
             f"{CORE_IOT_URL}/api/plugins/telemetry/DEVICE/{device_id}/values/attributes/CLIENT_SCOPE",
             headers=HEADERS,
-            timeout=5
+            timeout=15
         )
         response.raise_for_status()
         attributes = response.json()
@@ -164,8 +166,8 @@ def get_device_attributes(device_id):
 
 # --- (PHẦN MỚI) Hàm gửi RPC được tích hợp ---
 
-def send_rpc_to_device(device_id, command):
-    """Gửi lệnh RPC (POWER: ON/OFF) tới một device cụ thể."""
+def send_rpc_to_device(device_id, command, retries=3):
+    """Gửi lệnh RPC (POWER: ON/OFF) tới một device cụ thể với retry logic."""
     
     # Sử dụng URL và HEADERS chung đã được định nghĩa ở trên
     api_url = f"{CORE_IOT_URL}/api/rpc/oneway/{device_id}"
@@ -175,25 +177,32 @@ def send_rpc_to_device(device_id, command):
         "params": command.upper()
     }
     
-    try:        
-        
-        response = requests.post(api_url, headers=HEADERS, json=payload, timeout=5)
-        
-        if response.status_code == 200:
-            logging.info(f"Da gui lenh RPC '{command}' toi {device_id} thanh cong.")
-            return True, {"status": "success", "device_id": device_id, "command_sent": command}
-        
-        elif response.status_code == 401: 
-            logging.warning(f"Loi 401 khi gui RPC toi {device_id}: Token khong hop le.")
-            return False, {"status": "error", "message": "Token (JWT) da het han hoac khong hop le."}
+    for attempt in range(retries):
+        try:        
+            response = requests.post(api_url, headers=HEADERS, json=payload, timeout=15)
             
-        else: 
-            logging.error(f"Loi khi gui RPC tới {device_id}: {response.status_code} - {response.text}")
-            return False, {"status": "error", "message": response.text, "device_id": device_id}
+            if response.status_code == 200:
+                logging.info(f"Da gui lenh RPC '{command}' toi {device_id} thanh cong.")
+                return True, {"status": "success", "device_id": device_id, "command_sent": command}
             
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Loi ket noi khi gui RPC toi {device_id}: {e}")
-        return False, {"status": "error", "message": str(e), "device_id": device_id}
+            elif response.status_code == 401: 
+                logging.warning(f"Loi 401 khi gui RPC toi {device_id}: Token khong hop le.")
+                return False, {"status": "error", "message": "Token (JWT) da het han hoac khong hop le."}
+                
+            else: 
+                logging.error(f"Loi khi gui RPC tới {device_id}: {response.status_code} - {response.text}")
+                return False, {"status": "error", "message": response.text, "device_id": device_id}
+                
+        except requests.exceptions.Timeout as e:
+            logging.warning(f"Timeout attempt {attempt + 1}/{retries} khi gui RPC toi {device_id}: {e}")
+            if attempt < retries - 1:
+                time.sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
+            else:
+                logging.error(f"Tất cả {retries} lần thử đã thất bại khi gửi RPC tới {device_id}")
+                return False, {"status": "error", "message": "Device không phản hồi sau nhiều lần thử. Vui lòng kiểm tra kết nối.", "device_id": device_id}
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Loi ket noi khi gui RPC toi {device_id}: {e}")
+            return False, {"status": "error", "message": str(e), "device_id": device_id}
 
 
 
@@ -235,12 +244,24 @@ def start_websocket():
                 if telemetry_keys_found:
                     latest_data[device_id]["telemetry"].update(telemetry_keys_found)
                     logging.info(f"Real-time telemetry for {device_id}: {telemetry_keys_found}")
+                    # Emit update via Socket.IO
+                    socketio.emit('device_update', {
+                        'device_id': device_id,
+                        'telemetry': latest_data[device_id]["telemetry"],
+                        'attributes': latest_data[device_id]["attributes"]
+                    }, room='device_updates')
 
                 # Xử lý Attribute (POWER)
                 if "POWER" in telemetry_data:
                     power_val = telemetry_data["POWER"][0][1]
                     latest_data[device_id]["attributes"]["POWER"] = power_val
                     logging.info(f"Real-time attribute for {device_id}: POWER = {power_val}")
+                    # Emit update via Socket.IO
+                    socketio.emit('device_update', {
+                        'device_id': device_id,
+                        'telemetry': latest_data[device_id]["telemetry"],
+                        'attributes': latest_data[device_id]["attributes"]
+                    }, room='device_updates')
             
         except json.JSONDecodeError as e:
             logging.error(f"Error decoding WebSocket message: {e} - Message: {message}")
@@ -435,8 +456,34 @@ def control_group_devices(command):
     # Trả về 200 nếu tất cả thành công, 207 (Multi-Status) nếu có một số lỗi
     return jsonify(summary), 200 if all_success else 207
 
+# --- Socket.IO Event Handlers ---
+
+@socketio.on('connect')
+def handle_connect():
+    """Client kết nối tới Socket.IO server."""
+    logging.info(f"Client connected: {request.sid}")
+    emit('response', {'data': 'Connected to Socket.IO server'})
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    """Client ngắt kết nối khỏi Socket.IO server."""
+    logging.info(f"Client disconnected: {request.sid}")
+
+@socketio.on('subscribe_devices')
+def handle_subscribe_devices():
+    """Client subscribe để nhận cập nhật devices."""
+    logging.info(f"Client {request.sid} subscribed to device updates")
+    emit('response', {'data': 'Subscribed to device updates'})
+    join_room('device_updates')
+
+@socketio.on('unsubscribe_devices')
+def handle_unsubscribe_devices():
+    """Client unsubscribe khỏi cập nhật devices."""
+    logging.info(f"Client {request.sid} unsubscribed from device updates")
+    leave_room('device_updates')
+
 if __name__ == "__main__":
     # Khởi động thread tự động cập nhật API
     threading.Thread(target=periodic_data_logger, daemon=True).start()
     threading.Thread(target=start_websocket, daemon=True).start()
-    app.run(debug=True, port=5000, use_reloader=False, host='0.0.0.0')
+    socketio.run(app, debug=True, port=5000, host='0.0.0.0', allow_unsafe_werkzeug=True)

@@ -1,4 +1,4 @@
-// API Client for FE-Phong - Communicates with Flask Backend
+// API Client for FE-Son - Communicates with Flask Backend
 // Base URL for the backend API
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
