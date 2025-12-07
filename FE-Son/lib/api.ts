@@ -1,6 +1,5 @@
 // API configuration and helper functions
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-const USE_MOCK_DATA = !API_BASE_URL;
+const API_BASE_URL = "http://localhost:5000";
 
 export interface Device {
   id: string;
@@ -45,10 +44,6 @@ export interface EnergyData {
 
 // API functions
 export async function fetchDevices(): Promise<Device[]> {
-  if (USE_MOCK_DATA) {
-    return Promise.resolve(getMockDevices());
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/check-data`);
     if (!response.ok) throw new Error("Failed to fetch devices");
@@ -56,11 +51,11 @@ export async function fetchDevices(): Promise<Device[]> {
 
     // Transform API response to Device format
     if (result.status === "success" && result.data) {
-      let count = 0;
-      return (result.data as any[]).map((deviceData: any) => {
+      return (result.data as any[]).map((deviceData: any, index: number) => {
         const attributes = deviceData?.attributes || {};
         const telemetry = deviceData?.telemetry || {};
-        const deviceId = deviceData?.id || `${++count}`;
+        const metadata = deviceData?.metadata || {};
+        const deviceId = deviceData?.id || `device-${index}`;
 
         const voltage = parseFloat(telemetry["ENERGY-Voltage"] || "0");
         const status = attributes.POWER === "ON" ? "online" : "offline";
@@ -68,11 +63,11 @@ export async function fetchDevices(): Promise<Device[]> {
 
         return {
           id: deviceId,
-          name: `Smart Device ${++count}`,
-          type: deviceData.type,
+          name: metadata.name || deviceData.name || `Smart Device ${index + 1}`,
+          type: metadata.type || deviceData.type || "sensor",
           status: status as "online" | "offline",
           isOn,
-          location: deviceData.location,
+          location: metadata.location || deviceData.location || "",
           lastUpdate: new Date().toISOString(),
           power: parseFloat(telemetry["ENERGY-Power"] || "0"),
           voltage: voltage,
@@ -91,31 +86,7 @@ export async function fetchDevices(): Promise<Device[]> {
   }
 }
 
-export async function toggleDevice(
-  deviceId: string,
-  isOn: boolean
-): Promise<void> {
-  if (USE_MOCK_DATA) {
-    console.log(`[Mock] Toggle device ${deviceId} to ${isOn}`);
-    return Promise.resolve();
-  }
-
-  try {
-    await fetch(`${API_BASE_URL}/devices/${deviceId}/toggle`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ isOn }),
-    });
-  } catch (error) {
-    console.error("Error toggling device:", error);
-  }
-}
-
 export async function fetchAlerts(): Promise<Alert[]> {
-  if (USE_MOCK_DATA) {
-    return Promise.resolve(getMockAlerts());
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/alerts`);
     if (!response.ok) throw new Error("Failed to fetch alerts");
@@ -127,11 +98,6 @@ export async function fetchAlerts(): Promise<Alert[]> {
 }
 
 export async function markAlertAsRead(alertId: string): Promise<void> {
-  if (USE_MOCK_DATA) {
-    console.log(`[Mock] Mark alert ${alertId} as read`);
-    return Promise.resolve();
-  }
-
   try {
     await fetch(`${API_BASE_URL}/alerts/${alertId}/read`, {
       method: "POST",
@@ -142,10 +108,6 @@ export async function markAlertAsRead(alertId: string): Promise<void> {
 }
 
 export async function fetchActivityLogs(): Promise<ActivityLog[]> {
-  if (USE_MOCK_DATA) {
-    return Promise.resolve(getMockLogs());
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/logs`);
     if (!response.ok) throw new Error("Failed to fetch logs");
@@ -159,10 +121,6 @@ export async function fetchActivityLogs(): Promise<ActivityLog[]> {
 export async function fetchEnergyData(
   period: "day" | "week" | "month"
 ): Promise<EnergyData[]> {
-  if (USE_MOCK_DATA) {
-    return Promise.resolve(getMockEnergyData(period));
-  }
-
   try {
     const response = await fetch(`${API_BASE_URL}/energy?period=${period}`);
     if (!response.ok) throw new Error("Failed to fetch energy data");
@@ -170,6 +128,27 @@ export async function fetchEnergyData(
   } catch (error) {
     console.error("Error fetching energy data:", error);
     return getMockEnergyData(period);
+  }
+}
+
+export async function controlAllDevices(command: "ON" | "OFF"): Promise<Device[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/control/group/${command}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+    if (!response.ok) throw new Error("Failed to control devices")
+    const data = await response.json()
+    // Return updated devices based on results
+    return (
+      data.results?.map((result: any) => ({
+        id: result.device_id,
+        isOn: command === "ON",
+      })) || []
+    )
+  } catch (error) {
+    console.error("Error controlling devices:", error)
+    return []
   }
 }
 

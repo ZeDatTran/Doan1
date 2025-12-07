@@ -11,6 +11,7 @@ import os
 import time
 import threading
 import random
+import hashlib
 from collections import defaultdict
 
 # === Forecast & DB Integration ===
@@ -24,7 +25,7 @@ except ImportError:
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
 # Load environment variables
 load_dotenv()
@@ -59,10 +60,23 @@ TELEMETRY_KEYS = ["ENERGY-Voltage", "ENERGY-Current", "ENERGY-Power", "ENERGY-To
 # Device types and locations for display
 DEVICE_TYPES = ["light", "fan", "ac", "sensor", "camera"]
 DEVICE_LOCATIONS = ["Phòng khách", "Phòng ngủ", "Phòng làm việc", "Phòng ăn", "Ban công"]
+DEVICE_NAME_MAP = {
+    "light": "Đèn thông minh",
+    "fan": "Quạt máy",
+    "ac": "Điều hòa",
+    "sensor": "Cảm biến",
+    "camera": "Camera"
+}
 
 # Store latest data
 latest_data = {}
 subscription_to_device_map = {}
+
+# Cache metadata đã gán
+DEVICE_METADATA_CACHE = {}
+
+# Store alert thresholds for each client
+client_thresholds = {}
 
 # === GLOBAL VARIABLES FOR FORECAST ===
 if FORECAST_ENABLED:
@@ -107,7 +121,7 @@ if FORECAST_ENABLED:
     def generate_realistic_kwh(hour):
         """Generate realistic kWh based on time of day."""
         if 0 <= hour < 6:
-            base = 0.15  # Night: Low
+            base = 0.1  # Night: Low
         elif 6 <= hour < 9:
             base = 0.9   # Morning: High
         elif 9 <= hour < 17:
@@ -133,6 +147,39 @@ if FORECAST_ENABLED:
         logging.info("!!! Data generation complete. Waiting for manual trigger (/forecast).")
 
 # --- Core IoT Functions ---
+
+def get_or_assign_metadata(device_id):
+    """
+    Hàm trung tâm để gán Type, Location, Name cho thiết bị.
+    Chỉ tính toán 1 lần duy nhất cho mỗi ID.
+    Gán Metadata cố định dựa trên Device ID để không bị đổi tên khi restart server.
+    """
+    global DEVICE_METADATA_CACHE, DEVICE_TYPES, DEVICE_LOCATIONS, DEVICE_NAME_MAP
+    
+    if device_id in DEVICE_METADATA_CACHE:
+        return DEVICE_METADATA_CACHE[device_id]
+        
+    # Sử dụng Hash của device_id để ra một số nguyên cố định
+    hash_object = hashlib.md5(device_id.encode())
+    hash_int = int(hash_object.hexdigest(), 16)
+    
+    # Dùng số hash này để chia lấy dư -> Luôn ra cùng 1 kết quả cho 1 device_id
+    type_idx = hash_int % len(DEVICE_TYPES)
+    loc_idx = hash_int % len(DEVICE_LOCATIONS)
+    
+    device_type = DEVICE_TYPES[type_idx]
+    device_location = DEVICE_LOCATIONS[loc_idx]
+    device_name = f"{DEVICE_NAME_MAP.get(device_type, device_type)} {device_location}"
+
+    metadata = {
+        "type": device_type,
+        "name": device_name,
+        "location": device_location
+    }
+    DEVICE_METADATA_CACHE[device_id] = metadata
+    logging.info(f"Device Metadata Assigned: {device_id} -> {device_name}")
+    
+    return metadata
 
 def verify_token():
     """Verify JWT token validity."""
@@ -201,7 +248,8 @@ def get_device_telemetry(device_id):
         telemetry = response.json()
         
         if device_id not in latest_data:
-            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+            metadata = get_or_assign_metadata(device_id)
+            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
         
         parsed_telemetry = {}
         for key, value_list in telemetry.items():
@@ -234,7 +282,8 @@ def get_device_attributes(device_id):
         power_attr = next((attr for attr in attributes if attr["key"] == "POWER"), {"value": "N/A"})
         
         if device_id not in latest_data:
-            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+            metadata = get_or_assign_metadata(device_id)
+            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
             
         latest_data[device_id]["attributes"]["POWER"] = power_attr["value"]
         logging.info(f"POWER attribute received for device {device_id}: {power_attr['value']}")
@@ -315,7 +364,8 @@ def start_websocket():
                 telemetry_data = data.get("data", {})
                 
                 if device_id not in latest_data:
-                    latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+                    metadata = get_or_assign_metadata(device_id)
+                    latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
 
                 # Process Telemetry
                 telemetry_keys_found = {key: telemetry_data[key][0][1] for key in TELEMETRY_KEYS if key in telemetry_data}
@@ -323,31 +373,87 @@ def start_websocket():
                     latest_data[device_id]["telemetry"].update(telemetry_keys_found)
                     logging.info(f"Real-time telemetry for {device_id}: {telemetry_keys_found}")
                     
-                    # Emit Socket.IO update
-                    socketio.emit('device_update', {
-                        'device_id': device_id,
-                        'telemetry': latest_data[device_id]["telemetry"],
-                        'attributes': latest_data[device_id]["attributes"]
-                    }, room='device_updates')
+                    # === ALERT LOGIC: Check threshold và auto-shutdown ===
+                    if "ENERGY-Current" in telemetry_keys_found:
+                        current_val = float(telemetry_keys_found["ENERGY-Current"])
+                        display_name = latest_data[device_id]["metadata"]["name"]
+
+                        # Duyệt qua từng client đang kết nối để xem ai cần cảnh báo
+                        for sid, threshold in client_thresholds.items():
+                            if current_val > threshold:
+                                msg = {
+                                    "level": "DANGER",
+                                    "device_id": device_id,
+                                    "current": current_val,
+                                    "threshold": threshold,
+                                    "message": f"{display_name} (Dòng {current_val}A) vượt ngưỡng {threshold}A."
+                                }
+                                # Gửi đích danh cho Client đó
+                                socketio.emit('alert_trigger', msg, room=sid)
+                                
+                                # Tự động tắt thiết bị khi vượt ngưỡng
+                                try:
+                                    logging.warning(f"Auto-shutdown: {display_name} (Current: {current_val}A > Threshold: {threshold}A)")
+                                    success, result = send_rpc_to_device(device_id, "OFF")
+                                    if success:
+                                        logging.info(f"Auto-shutdown successful for {device_id}")
+                                        # Gửi activity log
+                                        log_entry = {
+                                            'id': f'log-{int(time.time() * 1000)}',
+                                            'action': 'Tắt thiết bị tự động (Vượt ngưỡng)',
+                                            'deviceId': device_id,
+                                            'deviceName': display_name,
+                                            'user': 'Hệ thống',
+                                            'timestamp': datetime.now().isoformat(),
+                                            'details': f'Dòng điện: {current_val}A > Ngưỡng: {threshold}A'
+                                        }
+                                        socketio.emit('activity_log', log_entry, room='logs')
+                                    else:
+                                        logging.error(f"Auto-shutdown failed for {device_id}: {result}")
+                                except Exception as e:
+                                    logging.error(f"Error during auto-shutdown for {device_id}: {e}")
+                                
+                                # Chỉ tắt một lần, thoát vòng lặp
+                                break
 
                 # Process Attribute (POWER)
                 if "POWER" in telemetry_data:
                     power_val = telemetry_data["POWER"][0][1]
+                    old_power = latest_data[device_id]["attributes"].get("POWER", "N/A")
                     latest_data[device_id]["attributes"]["POWER"] = power_val
                     logging.info(f"Real-time attribute for {device_id}: POWER = {power_val}")
                     
-                    # Emit Socket.IO update
-                    socketio.emit('device_update', {
-                        'device_id': device_id,
-                        'telemetry': latest_data[device_id]["telemetry"],
-                        'attributes': latest_data[device_id]["attributes"]
-                    }, room='device_updates')
+                    # Nếu có thay đổi trạng thái POWER, gửi log về FE
+                    if old_power != "N/A" and old_power != power_val:
+                        display_name = latest_data[device_id]["metadata"]["name"]
+                        action = "Bật thiết bị" if power_val == "ON" else "Tắt thiết bị"
+                        
+                        log_entry = {
+                            'id': f'log-{int(time.time() * 1000)}',
+                            'action': action,
+                            'deviceId': device_id,
+                            'deviceName': display_name,
+                            'user': 'Hệ thống',
+                            'timestamp': datetime.now().isoformat(),
+                            'details': f'Trạng thái: {power_val}'
+                        }
+                        
+                        # Broadcast log đến tất cả clients
+                        socketio.emit('activity_log', log_entry, room='logs')
+                        logging.info(f"Activity log sent: {action} - {display_name}")
 
                 # Process ENERGY-Total for forecast
                 if FORECAST_ENABLED and "ENERGY-Total" in telemetry_data:
                     ts_ms = telemetry_data["ENERGY-Total"][0][0]
                     iso_ts = datetime.fromtimestamp(ts_ms / 1000).strftime("%Y-%m-%dT%H:%M:%SZ")
                     process_new_energy(device_id, telemetry_data["ENERGY-Total"][0][1], iso_ts)
+                
+                # Broadcast Data to dashboard
+                socketio.emit('dashboard_update', {
+                    "device_id": device_id,
+                    "data": latest_data[device_id],
+                    "timestamp": datetime.now().isoformat()
+                }, room='dashboard')
             
         except json.JSONDecodeError as e:
             logging.error(f"Error decoding WebSocket message: {e}")
@@ -427,18 +533,28 @@ def start_websocket():
 
 @app.route('/', methods=['GET'])
 def home():
+    endpoints = {
+        "/check-data": "Get all device data",
+        "/check-token": "Verify JWT token",
+        "/control/<device_id>/<on|off>": "Control specific device",
+        "/control/group/<on|off>": "Control all devices"
+    }
+    
+    if FORECAST_ENABLED:
+        endpoints["/forecast"] = "Trigger AI forecast"
+        endpoints["/forecast/summary"] = "Get simplified forecast result (Fast)"
+        endpoints["/hourly"] = "Get hourly kWh data"
+    
     return jsonify({
         "status": "success",
-        "message": "Smart Plug Backend with AI Forecast",
-        "endpoints": {
-            "/check-data": "Get all device data",
-            "/check-token": "Verify JWT token",
-            "/control/<device_id>/<on|off>": "Control specific device",
-            "/control/group/<on|off>": "Control all devices",
-            "/forecast": "Trigger AI forecast (if enabled)",
-            "/forecast/summary": "Get simplified forecast result (Fast)",
-            "/hourly": "Get hourly kWh data (if enabled)"
-        }
+        "message": "Smart Plug Backend - Full Features (Alert + Forecast)",
+        "features": {
+            "forecast": FORECAST_ENABLED,
+            "auto_shutdown": True,
+            "activity_logs": True,
+            "realtime_alerts": True
+        },
+        "endpoints": endpoints
     })
 
 @app.route('/check-data', methods=['GET'])
@@ -455,13 +571,13 @@ def check_data():
             get_device_attributes(device_id)
             
     data_array = []
-    for idx, (device_id, info) in enumerate(latest_data.items()):
-        device_type = DEVICE_TYPES[idx % len(DEVICE_TYPES)]
-        device_location = DEVICE_LOCATIONS[idx % len(DEVICE_LOCATIONS)]
+    for device_id, info in latest_data.items():
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
         
         data_array.append({
-            "type": device_type,
-            "location": device_location,
+            "type": meta["type"],
+            "name": meta["name"],
+            "location": meta["location"],
             "id": device_id,
             "attributes": info.get("attributes", {}),
             "telemetry": info.get("telemetry", {})
@@ -620,23 +736,85 @@ def handle_connect():
 def handle_disconnect():
     """Client disconnected from Socket.IO server."""
     logging.info(f"Client disconnected: {request.sid}")
+    # Xóa threshold của user khi họ thoát để tránh rác bộ nhớ
+    if request.sid in client_thresholds:
+        del client_thresholds[request.sid]
+
+@socketio.on('join_dashboard')
+def handle_join_dashboard():
+    """Client join dashboard room để nhận realtime updates."""
+    join_room('dashboard')
+    logging.info(f"Client {request.sid} joined room 'dashboard'")
+    
+    # Gửi ngay dữ liệu Snapshot hiện có cho client mới vào
+    data_list = []
+    for device_id, info in latest_data.items():
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
+        data_list.append({
+            "id": device_id,
+            "type": meta["type"],
+            "name": meta["name"],
+            "location": meta["location"],
+            "attributes": info.get("attributes", {}),
+            "telemetry": info.get("telemetry", {})
+        })
+    emit('dashboard_update', {"data": data_list})
+
+@socketio.on('join_logs')
+def handle_join_logs():
+    """Client join logs room để nhận activity logs realtime."""
+    join_room('logs')
+    logging.info(f"Client {request.sid} joined room 'logs'")
+
+@socketio.on('set_alert_threshold')
+def handle_set_threshold(data):
+    """Client gửi ngưỡng cảnh báo lên server."""
+    try:
+        threshold = float(data.get('threshold', 100))
+        client_thresholds[request.sid] = threshold
+        join_room('alert')
+        logging.info(f"Client {request.sid} set threshold: {threshold}A")
+        
+        # Emit activity log
+        log_entry = {
+            'id': f'log-{int(time.time() * 1000)}',
+            'action': 'Cài đặt ngưỡng cảnh báo',
+            'deviceId': None,
+            'deviceName': None,
+            'user': 'Hệ thống',
+            'timestamp': datetime.now().isoformat(),
+            'details': f'Ngưỡng: {threshold}A'
+        }
+        emit('activity_log', log_entry)
+    except ValueError:
+        logging.error(f"Invalid threshold value from client {request.sid}")
+        pass
 
 @socketio.on('subscribe_devices')
 def handle_subscribe_devices():
-    """Client subscribes to device updates."""
+    """Client subscribes to device updates (legacy support)."""
     logging.info(f"Client {request.sid} subscribed to device updates")
     emit('response', {'data': 'Subscribed to device updates'})
     join_room('device_updates')
 
 @socketio.on('unsubscribe_devices')
 def handle_unsubscribe_devices():
-    """Client unsubscribes from device updates."""
+    """Client unsubscribes from device updates (legacy support)."""
     logging.info(f"Client {request.sid} unsubscribed from device updates")
     leave_room('device_updates')
 
 # === MAIN ===
 
 if __name__ == "__main__":
+    print("=" * 60)
+    print(" SMART HOME BACKEND - FULL FEATURES")
+    print("=" * 60)
+    print(f" Forecast Enabled: {FORECAST_ENABLED}")
+    print(" Auto-Shutdown Enabled: True")
+    print(" Activity Logs Enabled: True")
+    print(" Realtime Alerts Enabled: True")
+    print("=" * 60)
+    
     # Start background threads
     threading.Thread(target=periodic_data_logger, daemon=True).start()
     threading.Thread(target=start_websocket, daemon=True).start()
@@ -644,6 +822,9 @@ if __name__ == "__main__":
     # Initialize dummy data if forecast enabled
     if FORECAST_ENABLED:
         init_dummy_data()
+    
+    print("🔌 Server starting on http://0.0.0.0:5000")
+    print("=" * 60)
     
     # Run Socket.IO server
     socketio.run(app, debug=True, port=5000, host='0.0.0.0', allow_unsafe_werkzeug=True)

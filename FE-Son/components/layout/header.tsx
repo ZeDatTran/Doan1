@@ -12,44 +12,70 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-  fetchAlerts,
-  fetchActivityLogs,
-  markAlertAsRead,
   type Alert,
   type ActivityLog,
 } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import { useSocket } from "@/context/SocketContext";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [logs, setLogs] = useState<ActivityLog[]>([]);
   const [activeTab, setActiveTab] = useState<"alerts" | "logs">("alerts");
+  const { socket, isConnected } = useSocket();
 
+  // Socket listeners
   useEffect(() => {
-    loadAlerts();
-    loadLogs();
-    // Refresh every 30 seconds
-    const interval = setInterval(() => {
-      loadAlerts();
-      loadLogs();
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!socket || !isConnected) return;
 
-  const loadAlerts = async () => {
-    const data = await fetchAlerts();
-    setAlerts(data);
-  };
+    // Join logs room to receive realtime activity logs
+    socket.emit("join_logs");
+    console.log("Header: Joined logs room");
 
-  const loadLogs = async () => {
-    const data = await fetchActivityLogs();
-    setLogs(data);
-  };
+    const onAlertTrigger = (msg: any) => {
+      console.log("Alert received in Header:", msg);
 
-  const handleMarkAsRead = async (alertId: string) => {
-    await markAlertAsRead(alertId);
+      const newAlert: Alert = {
+        id: `alert-${Date.now()}`,
+        type: msg.level === "DANGER" ? "error" : "warning",
+        message: msg.message || "Cảnh báo từ hệ thống",
+        timestamp: new Date().toISOString(),
+        deviceId: msg.device_id,
+        read: false,
+      };
+
+      setAlerts((prev) => [newAlert, ...prev].slice(0, 100));
+    };
+
+    const onActivityLog = (entry: any) => {
+      console.log("Activity log received:", entry);
+
+      const newLog: ActivityLog = {
+        id: entry.id || `log-${Date.now()}`,
+        action: entry.action || "Thông báo",
+        deviceId: entry.deviceId,
+        deviceName: entry.deviceName,
+        user: entry.user || "Hệ thống",
+        timestamp: entry.timestamp || new Date().toISOString(),
+        details: entry.details,
+      };
+
+      setLogs((prev) => [newLog, ...prev].slice(0, 100));
+    };
+
+    socket.on("alert_trigger", onAlertTrigger);
+    socket.on("activity_log", onActivityLog);
+
+    return () => {
+      socket.off("alert_trigger", onAlertTrigger);
+      socket.off("activity_log", onActivityLog);
+    };
+  }, [socket, isConnected]);
+
+  const handleMarkAsRead = (alertId: string) => {
+    // Only update local state, alerts are managed via WebSocket
     setAlerts(alerts.map((a) => (a.id === alertId ? { ...a, read: true } : a)));
   };
 
