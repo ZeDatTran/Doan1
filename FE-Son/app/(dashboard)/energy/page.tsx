@@ -6,15 +6,76 @@ import { EnergyStats } from "@/components/energy/energy-stats"
 import { ThresholdAlert } from "@/components/energy/threshold-alert"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetchEnergyData, type EnergyData } from "@/lib/api"
+import { useSocket } from "@/context/SocketContext"
+
+interface DeviceCurrentData {
+  deviceId: string
+  deviceName: string
+  current: number
+}
 
 export default function EnergyPage() {
   const [period, setPeriod] = useState<"day" | "week" | "month">("day")
   const [data, setData] = useState<EnergyData[]>([])
   const [loading, setLoading] = useState(true)
+  // Track all devices' ENERGY-Current
+  const [devicesCurrentData, setDevicesCurrentData] = useState<Map<string, DeviceCurrentData>>(new Map())
+  const { socket, isConnected } = useSocket()
 
   useEffect(() => {
     loadData()
   }, [period])
+
+  // Subscribe to dashboard socket to collect ENERGY-Current for all devices
+  useEffect(() => {
+    if (!socket || !isConnected) return
+
+    socket.emit("join_dashboard")
+    console.log("Energy page: Joined dashboard room")
+
+    const onDashboardUpdate = (payload: any) => {
+      try {
+        // Handle initial snapshot (array of all devices)
+        if (payload.data && Array.isArray(payload.data)) {
+          const newMap = new Map<string, DeviceCurrentData>()
+          payload.data.forEach((item: any) => {
+            const current = parseFloat(item.telemetry?.["ENERGY-Current"] || "0")
+            newMap.set(item.id, {
+              deviceId: item.id,
+              deviceName: item.name,
+              current: current
+            })
+          })
+          setDevicesCurrentData(newMap)
+        }
+        // Handle individual device update
+        else if (payload?.device_id && payload?.data) {
+          const current = payload.data["ENERGY-Current"]
+          if (current !== undefined && current !== null) {
+            const value = Number(current) || 0
+            setDevicesCurrentData((prev) => {
+              const newMap = new Map(prev)
+              const existing = newMap.get(payload.device_id)
+              newMap.set(payload.device_id, {
+                deviceId: payload.device_id,
+                deviceName: existing?.deviceName || "Unknown Device",
+                current: value
+              })
+              return newMap
+            })
+          }
+        }
+      } catch (e) {
+        console.error("Error processing dashboard_update in Energy page", e)
+      }
+    }
+
+    socket.on("dashboard_update", onDashboardUpdate)
+
+    return () => {
+      socket.off("dashboard_update", onDashboardUpdate)
+    }
+  }, [socket, isConnected])
 
   const loadData = async () => {
     setLoading(true)
@@ -23,7 +84,23 @@ export default function EnergyPage() {
     setLoading(false)
   }
 
-  const totalConsumption = data.reduce((sum, item) => sum + item.consumption, 0)
+  // Find device with maximum current
+  const getMaxCurrentDevice = (): DeviceCurrentData => {
+    if (devicesCurrentData.size === 0) {
+      return { deviceId: "", deviceName: "Không có thiết bị", current: 0 }
+    }
+
+    let maxDevice: DeviceCurrentData = { deviceId: "", deviceName: "", current: 0 }
+    devicesCurrentData.forEach((device) => {
+      if (device.current > maxDevice.current) {
+        maxDevice = device
+      }
+    })
+
+    return maxDevice
+  }
+
+  const maxCurrentDevice = getMaxCurrentDevice()
 
   if (loading) {
     return (
@@ -65,7 +142,11 @@ export default function EnergyPage() {
 
         {/* Threshold alert - takes 1 column */}
         <div>
-          <ThresholdAlert currentConsumption={totalConsumption} />
+          <ThresholdAlert
+            // hiển thị giá trị max current hiện tại và tên thiết bị
+            currentAmps={maxCurrentDevice.current}
+            deviceName={maxCurrentDevice.deviceName}
+          />
         </div>
       </div>
     </div>

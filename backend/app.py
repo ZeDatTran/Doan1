@@ -9,9 +9,14 @@ import os
 import time
 import threading
 from flask_cors import CORS  # import CORS
+from flask_socketio import SocketIO, emit, join_room, leave_room
+import hashlib
 
 app = Flask(__name__)
 CORS(app)
+
+#khởi tạo socketIO server với async_mode là 'threading'
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
 # Tải biến môi trường từ .env
 load_dotenv()
@@ -45,10 +50,24 @@ TELEMETRY_KEYS = ["ENERGY-Voltage", "ENERGY-Current", "ENERGY-Power", "ENERGY-To
 DEVICE_TYPES = ["light", "fan", "ac", "sensor", "camera"]
 DEVICE_LOCATIONS = ["Phòng khách", "Phòng ngủ", "Phòng làm việc", "Phòng ăn", "Ban công"]
 
+DEVICE_NAME_MAP = {
+    "light": "Đèn thông minh",
+    "fan": "Quạt máy",
+    "ac": "Điều hòa",
+    "sensor": "Cảm biến",
+    "camera": "Camera"
+}
+
 # Lưu trữ dữ liệu mới nhất (hỗ trợ nhiều devices)
 latest_data = {}
 
 subscription_to_device_map = {}
+
+# Lưu trữ ngưỡng cảnh báo cho từng user (client)
+client_thresholds = {}
+
+# Cache lưu trữ metadata đã gán
+DEVICE_METADATA_CACHE = {}
 
 # --- Các hàm Core IoT (Giữ nguyên) ---
 
@@ -66,6 +85,39 @@ def verify_token():
     except requests.RequestException as e:
         logging.error(f"Invalid JWT_TOKEN: {e}, Status Code: {getattr(e.response, 'status_code', 'N/A')}")
         return False
+
+def get_or_assign_metadata(device_id):
+    """
+    Hàm trung tâm để gán Type, Location, Name cho thiết bị.
+    Chỉ tính toán 1 lần duy nhất cho mỗi ID.
+    Gán Metadata cố định dựa trên Device ID để không bị đổi tên khi restart server.
+    """
+    global DEVICE_METADATA_CACHE, DEVICE_TYPES, DEVICE_LOCATIONS, DEVICE_NAME_MAP
+    
+    if device_id in DEVICE_METADATA_CACHE:
+        return DEVICE_METADATA_CACHE[device_id]
+        
+    # Sử dụng Hash của device_id để ra một số nguyên cố định
+    hash_object = hashlib.md5(device_id.encode())
+    hash_int = int(hash_object.hexdigest(), 16)
+    
+    # Dùng số hash này để chia lấy dư -> Luôn ra cùng 1 kết quả cho 1 device_id
+    type_idx = hash_int % len(DEVICE_TYPES)
+    loc_idx = hash_int % len(DEVICE_LOCATIONS)
+    
+    device_type = DEVICE_TYPES[type_idx]
+    device_location = DEVICE_LOCATIONS[loc_idx]
+    device_name = f"{DEVICE_NAME_MAP.get(device_type, device_type)} {device_location}" # Ghép tên + vị trí cho rõ
+
+    metadata = {
+        "type": device_type,
+        "name": device_name,
+        "location": device_location
+    }
+    DEVICE_METADATA_CACHE[device_id] = metadata
+    logging.info(f"Device Metadata Assigned: {device_id} -> {device_name}")
+    
+    return metadata
 
 def get_devices_from_group():
     try:
@@ -118,7 +170,8 @@ def get_device_telemetry(device_id):
         telemetry = response.json()
         
         if device_id not in latest_data:
-            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+            metadata = get_or_assign_metadata(device_id)
+            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
         parsed_telemetry = {}
         for key, value_list in telemetry.items():
             if value_list and isinstance(value_list, list) and value_list[0] and 'value' in value_list[0]:
@@ -150,7 +203,8 @@ def get_device_attributes(device_id):
         power_attr = next((attr for attr in attributes if attr["key"] == "POWER"), {"value": "N/A"})
         
         if device_id not in latest_data:
-            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+            metadata = get_or_assign_metadata(device_id)
+            latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
             
         latest_data[device_id]["attributes"]["POWER"] = power_attr["value"]
         logging.info(f"POWER attribute received for device {device_id}: {power_attr['value']}")
@@ -195,8 +249,6 @@ def send_rpc_to_device(device_id, command):
         logging.error(f"Loi ket noi khi gui RPC toi {device_id}: {e}")
         return False, {"status": "error", "message": str(e), "device_id": device_id}
 
-
-
 def periodic_data_logger():
     while True:
         logging.info("Periodic check: Starting data fetch cycle for group")
@@ -209,6 +261,67 @@ def periodic_data_logger():
         else:
             logging.warning("Periodic check: Cannot fetch data due to invalid token")
         time.sleep(10)
+
+# Xử lý server socket giao tiếp với FE
+
+@socketio.on('connect')
+def handle_connect():
+    logging.info(f"Frontend Client connected: {request.sid}")
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    logging.info(f"Frontend Client disconnected: {request.sid}")
+    # Xóa threshold của user khi họ thoát để tránh rác bộ nhớ
+    if request.sid in client_thresholds:
+        del client_thresholds[request.sid]
+
+# Socket cho Dashboard: Client join vào để nhận data liên tục
+@socketio.on('join_dashboard')
+def handle_join_dashboard():
+    join_room('dashboard')
+    logging.info(f"Client {request.sid} joined room 'dashboard'")
+    # Gửi ngay dữ liệu Snapshot hiện có cho client mới vào
+    # Sử dụng event 'dashboard_update' với format Array
+    data_list = []
+    for device_id, info in latest_data.items():
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
+        data_list.append({
+            "id": device_id,
+            "type": meta["type"],
+            "name": meta["name"],
+            "location": meta["location"],
+            "attributes": info.get("attributes", {}),
+            "telemetry": info.get("telemetry", {})
+        })
+    emit('dashboard_update', {"data": data_list})
+
+# Socket cho Logs: Client join vào để nhận activity logs realtime
+@socketio.on('join_logs')
+def handle_join_logs():
+    join_room('logs')
+    logging.info(f"Client {request.sid} joined room 'logs'")
+
+# Socket cho Alert: Client gửi ngưỡng lên và join room alert
+@socketio.on('set_alert_threshold')
+def handle_set_threshold(data):
+    try:
+        threshold = float(data.get('threshold', 100))
+        client_thresholds[request.sid] = threshold
+        join_room('alert')
+        logging.info(f"Client {request.sid} set threshold: {threshold}A")
+        # Emit theo định dạng ActivityLog của FE
+        log_entry = {
+            'id': f'log-{int(time.time() * 1000)}',
+            'action': 'Cài đặt ngưỡng cảnh báo',
+            'deviceId': None,
+            'deviceName': None,
+            'user': 'Hệ thống',
+            'timestamp': datetime.now().isoformat(),
+            'details': f'Ngưỡng: {threshold}A'
+        }
+        emit('activity_log', log_entry)
+    except ValueError:
+        pass
 
 def start_websocket():
     ws_url = f"wss://app.coreiot.io/api/ws/plugins/telemetry?token={JWT_TOKEN}"
@@ -228,7 +341,8 @@ def start_websocket():
                 telemetry_data = data.get("data", {})
                 
                 if device_id not in latest_data:
-                    latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}}
+                    metadata = get_or_assign_metadata(device_id)
+                    latest_data[device_id] = {"telemetry": {}, "attributes": {"POWER": "N/A"}, "metadata": metadata}
 
                 # Xử lý Telemetry
                 telemetry_keys_found = {key: telemetry_data[key][0][1] for key in TELEMETRY_KEYS if key in telemetry_data}
@@ -236,11 +350,72 @@ def start_websocket():
                     latest_data[device_id]["telemetry"].update(telemetry_keys_found)
                     logging.info(f"Real-time telemetry for {device_id}: {telemetry_keys_found}")
 
+                    # Kiểm tra Alert Logic (Check ngưỡng)
+                    if "ENERGY-Current" in telemetry_keys_found:
+                        current_val = float(telemetry_keys_found["ENERGY-Current"])
+                        
+                        # Lấy tên hiển thị trực tiếp từ metadata đã lưu
+                        display_name = latest_data[device_id]["metadata"]["name"]
+
+                        # Duyệt qua từng client đang kết nối để xem ai cần cảnh báo
+                        for sid, threshold in client_thresholds.items():
+                            if current_val > threshold:
+                                msg = {
+                                    "level": "DANGER",
+                                    "device_id": device_id,
+                                    "current": current_val,
+                                    "threshold": threshold,
+                                    "message": f"{display_name} (Dòng {current_val}A) vượt ngưỡng {threshold}A."
+                                }
+                                # Gửi đích danh cho Client đó
+                                socketio.emit('alert_trigger', msg, room=sid)
+                                
+                                # Tự động tắt thiết bị khi vượt ngưỡng
+                                try:
+                                    logging.warning(f"Auto-shutdown: {display_name} (Current: {current_val}A > Threshold: {threshold}A)")
+                                    success, result = send_rpc_to_device(device_id, "OFF")
+                                    if success:
+                                        logging.info(f"Auto-shutdown successful for {device_id}")
+                                    else:
+                                        logging.error(f"Auto-shutdown failed for {device_id}: {result}")
+                                except Exception as e:
+                                    logging.error(f"Error during auto-shutdown for {device_id}: {e}")
+                                
+                                # Chỉ tắt một lần, thoát vòng lặp
+                                break
+
                 # Xử lý Attribute (POWER)
                 if "POWER" in telemetry_data:
                     power_val = telemetry_data["POWER"][0][1]
+                    old_power = latest_data[device_id]["attributes"].get("POWER", "N/A")
                     latest_data[device_id]["attributes"]["POWER"] = power_val
                     logging.info(f"Real-time attribute for {device_id}: POWER = {power_val}")
+                             
+                    # Nếu có thay đổi trạng thái POWER, gửi log về FE
+                    if old_power != "N/A" and old_power != power_val:
+                        display_name = latest_data[device_id]["metadata"]["name"]
+                        action = "Bật thiết bị" if power_val == "ON" else "Tắt thiết bị"
+                        
+                        log_entry = {
+                            'id': f'log-{int(time.time() * 1000)}',
+                            'action': action,
+                            'deviceId': device_id,
+                            'deviceName': display_name,
+                            'user': 'Hệ thống',
+                            'timestamp': datetime.now().isoformat(),
+                            'details': f'Trạng thái: {power_val}'
+                        }
+                        
+                        # Broadcast log đến tất cả clients
+                        socketio.emit('activity_log', log_entry, room='logs')
+                        logging.info(f"Activity log sent: {action} - {display_name}")
+                
+                # Bắn Data sang ALL connected clients (broadcast)
+                socketio.emit('dashboard_update', {
+                    "device_id": device_id,
+                    "data": latest_data[device_id],
+                    "timestamp": datetime.now().isoformat()
+                }, room='dashboard')
             
         except json.JSONDecodeError as e:
             logging.error(f"Error decoding WebSocket message: {e} - Message: {message}")
@@ -337,15 +512,14 @@ def check_data():
             get_device_attributes(device_id)
             
     data_array = []
-    for idx, (device_id, info) in enumerate(latest_data.items()):
-        # Gán type và location theo thứ tự, reset khi hết giá trị
-        device_type = DEVICE_TYPES[idx % len(DEVICE_TYPES)]
-        device_location = DEVICE_LOCATIONS[idx % len(DEVICE_LOCATIONS)]
+    for device_id, info in latest_data.items():
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
         
         data_array.append({
-            "type": device_type,
-            "location": device_location,
+            "type": meta["type"],
+            "name": meta["name"],
             "id": device_id,
+            "location": meta["location"],
             "attributes": info.get("attributes", {}),
             "telemetry": info.get("telemetry", {})
         })
@@ -437,6 +611,8 @@ def control_group_devices(command):
 
 if __name__ == "__main__":
     # Khởi động thread tự động cập nhật API
-    threading.Thread(target=periodic_data_logger, daemon=True).start()
+    # threading.Thread(target=periodic_data_logger, daemon=True).start()
     threading.Thread(target=start_websocket, daemon=True).start()
-    app.run(debug=True, port=5000, use_reloader=False, host='0.0.0.0')
+    # Thay app.run() bằng socketio.run(), start cả Flask server lẫn Websocket server
+    print("Starting Flask-SocketIO Server...")
+    socketio.run(app, debug=True, port=5000, host='0.0.0.0', use_reloader=False)

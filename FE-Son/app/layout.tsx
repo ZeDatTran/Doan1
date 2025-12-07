@@ -1,6 +1,7 @@
 import type React from "react";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "../styles/globals.css";
+import { SocketProvider } from "@/context/SocketContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default function RootLayout({
       lang="vi"
       className={`${inter.variable} ${robotoMono.variable} antialiased`}
     >
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <SocketProvider>{children}</SocketProvider>
+      </body>
     </html>
   );
 }
