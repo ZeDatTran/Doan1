@@ -372,12 +372,14 @@ def start_websocket():
                 if telemetry_keys_found:
                     latest_data[device_id]["telemetry"].update(telemetry_keys_found)
                     logging.info(f"Real-time telemetry for {device_id}: {telemetry_keys_found}")
+                    
                     # Emit update via Socket.IO
-                    socketio.emit('device_update', {
-                        'device_id': device_id,
-                        'telemetry': latest_data[device_id]["telemetry"],
-                        'attributes': latest_data[device_id]["attributes"]
-                    }, room='device_updates')
+                    # socketio.emit('device_update', {
+                    #     'device_id': device_id,
+                    #     'telemetry': latest_data[device_id]["telemetry"],
+                    #     'attributes': latest_data[device_id]["attributes"]
+                    # }, room='device_updates')
+
                     # === ALERT LOGIC: Check threshold và auto-shutdown ===
                     if "ENERGY-Current" in telemetry_keys_found:
                         current_val = float(telemetry_keys_found["ENERGY-Current"])
@@ -418,11 +420,12 @@ def start_websocket():
                     logging.info(f"Real-time attribute for {device_id}: POWER = {power_val}")
                     
                     # Emit update via Socket.IO
-                    socketio.emit('device_update', {
-                        'device_id': device_id,
-                        'telemetry': latest_data[device_id]["telemetry"],
-                        'attributes': latest_data[device_id]["attributes"]
-                    }, room='device_updates')
+                    # socketio.emit('device_update', {
+                    #     'device_id': device_id,
+                    #     'telemetry': latest_data[device_id]["telemetry"],
+                    #     'attributes': latest_data[device_id]["attributes"]
+                    # }, room='device_updates')
+
                     # Nếu có thay đổi trạng thái POWER, gửi log về FE
                     if old_power != "N/A" and old_power != power_val:
                         display_name = latest_data[device_id]["metadata"]["name"]

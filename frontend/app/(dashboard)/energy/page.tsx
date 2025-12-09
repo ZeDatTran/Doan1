@@ -30,13 +30,17 @@ export default function EnergyPage() {
   useEffect(() => {
     if (!socket || !isConnected) return
 
+    // Join dashboard room to receive real-time updates
     socket.emit("join_dashboard")
     console.log("Energy page: Joined dashboard room")
 
     const onDashboardUpdate = (payload: any) => {
+      console.log("Energy page received dashboard_update:", payload)
+
       try {
         // Handle initial snapshot (array of all devices)
         if (payload.data && Array.isArray(payload.data)) {
+          console.log("Processing initial snapshot:", payload.data.length, "devices")
           const newMap = new Map<string, DeviceCurrentData>()
           payload.data.forEach((item: any) => {
             const current = parseFloat(item.telemetry?.["ENERGY-Current"] || "0")
@@ -47,20 +51,25 @@ export default function EnergyPage() {
             })
           })
           setDevicesCurrentData(newMap)
+          console.log("Updated devices current data from snapshot")
         }
         // Handle individual device update
         else if (payload?.device_id && payload?.data) {
-          const current = payload.data["ENERGY-Current"]
+          const current = payload.data.telemetry?.["ENERGY-Current"]
+          console.log(`Device ${payload.device_id} current update:`, current)
+
           if (current !== undefined && current !== null) {
             const value = Number(current) || 0
             setDevicesCurrentData((prev) => {
               const newMap = new Map(prev)
               const existing = newMap.get(payload.device_id)
+              const deviceName = payload.data.metadata?.name || existing?.deviceName || "Unknown Device"
               newMap.set(payload.device_id, {
                 deviceId: payload.device_id,
-                deviceName: existing?.deviceName || "Unknown Device",
+                deviceName: deviceName,
                 current: value
               })
+              console.log(`Updated device ${payload.device_id} (${deviceName}) current to ${value}A`)
               return newMap
             })
           }

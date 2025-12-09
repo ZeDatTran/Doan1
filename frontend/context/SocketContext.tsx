@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
-import { getSocket, initSocket } from "@/lib/socket";
+import { useQueryClient } from "@tanstack/react-query";
+import { initSocket, disconnectSocket } from "@/lib/socket";
 
 interface SocketContextType {
     socket: Socket | null;
@@ -17,24 +18,21 @@ const SocketContext = createContext<SocketContextType>({
 export function SocketProvider({ children }: { children: React.ReactNode }) {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [isConnected, setIsConnected] = useState(false);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
-        // Get or initialize socket
-        let socketInstance = getSocket();
-        if (!socketInstance) {
-            socketInstance = initSocket();
-        }
-
+        // Initialize socket once with QueryClient
+        const socketInstance = initSocket(queryClient);
         setSocket(socketInstance);
 
-        // Lắng nghe trạng thái kết nối
+        // Listen to connection state
         const handleConnect = () => {
-            console.log("Socket context: Connected");
+            console.log("Socket connected");
             setIsConnected(true);
         };
 
         const handleDisconnect = () => {
-            console.log("Socket context: Disconnected");
+            console.log("Socket disconnected");
             setIsConnected(false);
         };
 
@@ -44,12 +42,13 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         // Set initial connection state
         setIsConnected(socketInstance.connected);
 
-        // Cleanup khi component unmount
+        // Cleanup on unmount
         return () => {
             socketInstance.off("connect", handleConnect);
             socketInstance.off("disconnect", handleDisconnect);
+            disconnectSocket();
         };
-    }, []);
+    }, [queryClient]);
 
     return (
         <SocketContext.Provider value={{ socket, isConnected }}>
