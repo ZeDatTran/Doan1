@@ -2,6 +2,8 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 const USE_MOCK_DATA = !API_BASE_URL;
 
+import { aggregateEnergyDataByDay } from "./utils";
+
 export interface Device {
   id: string;
   name: string;
@@ -188,10 +190,18 @@ export async function fetchEnergyData(
   try {
     const response = await fetch(`${API_BASE_URL}/energy?period=${period}`);
     if (!response.ok) throw new Error("Failed to fetch energy data");
-    return await response.json();
+    
+    let data: EnergyData[] = await response.json();
+    
+    // For week/month views, aggregate hourly data into daily totals
+    if ((period === 'week' || period === 'month') && data.length > 50) {
+      data = aggregateEnergyDataByDay(data);
+    }
+    
+    return data;
   } catch (error) {
     console.error("Error fetching energy data:", error);
-    return getMockEnergyData(period);
+    return [];
   }
 }
 

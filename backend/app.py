@@ -139,7 +139,7 @@ if FORECAST_ENABLED:
         logging.info("!!! SYSTEM STARTUP: Generating REALISTIC dummy data...")
         with lock:
             dummy_now = datetime.now()
-            for i in range(200):
+            for i in range(750):
                 past_time = dummy_now - timedelta(hours=i)
                 key = past_time.strftime("%Y-%m-%dT%H:00:00")
                 if key not in hourly_kwh_global:
@@ -720,12 +720,53 @@ if FORECAST_ENABLED:
             logging.error(f"Error reading forecast summary: {e}")
             return jsonify({"status": "error", "message": str(e)}), 500
 
-    @app.route('/hourly', methods=['GET'])
-    def get_hourly():
-        """Get hourly kWh data (last 720 hours)."""
+    # Giá điện (VND/kWh)
+    PRICE_PER_KWH = 2500
+
+    @app.route('/energy', methods=['GET'])
+    def get_energy_data():
+        """API trả về dữ liệu tiêu thụ điện theo giờ với chi phí."""
+        period = request.args.get('period', 'day')
+        
+        # Tính toán mốc thời gian CHẶN DƯỚI (start_time)
+        now = datetime.now()
+        
+        start_of_this_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        start_of_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        if period == 'day':
+            start_time = start_of_today
+            
+        elif period == 'week':
+            seven_days_ago = now - timedelta(days=7)
+            start_time = max(seven_days_ago, start_of_this_month)
+            
+        elif period == 'month':
+            start_time = start_of_this_month
+            
+        else:
+            start_time = now - timedelta(hours=24)
+
+        response_data = []
+
         with lock:
-            recent = dict(sorted(hourly_kwh_global.items(), key=lambda x: x[0], reverse=True)[:720])
-        return jsonify(recent)
+            # Sort dữ liệu
+            sorted_items = sorted(hourly_kwh_global.items(), key=lambda x: x[0])
+            recent_items = sorted_items[-750:]
+            
+            for iso_ts, kwh in recent_items:
+                try:
+                    dt_obj = datetime.fromisoformat(iso_ts)
+                    if dt_obj >= start_time:
+                        response_data.append({
+                            "timestamp": iso_ts,
+                            "consumption": kwh,
+                            "cost": kwh * PRICE_PER_KWH
+                        })
+                except ValueError:
+                    continue
+
+        return jsonify(response_data)
 
 # === SOCKET.IO EVENT HANDLERS ===
 
