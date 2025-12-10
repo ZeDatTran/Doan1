@@ -31,7 +31,7 @@ export function ThresholdAlert({ currentAmps, deviceName }: ThresholdAlertProps)
 
   // Khi component mount, lấy từ LocalStorage ra
   useEffect(() => {
-    const savedThreshold = localStorage.getItem(`threshold_${deviceName}`)
+    const savedThreshold = localStorage.getItem(`threshold`)
     if (savedThreshold) {
       setThreshold(savedThreshold)
     }
@@ -61,7 +61,7 @@ export function ThresholdAlert({ currentAmps, deviceName }: ThresholdAlertProps)
     socket.emit("set_alert_threshold", { threshold: value })
 
     // Lưu vào LocalStorage
-    localStorage.setItem(`threshold_${deviceName}`, value.toString())
+    localStorage.setItem(`threshold`, value.toString())
 
     toast({
       title: "Đã lưu ngưỡng",
