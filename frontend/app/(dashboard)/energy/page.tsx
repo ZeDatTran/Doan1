@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { EnergyChart } from "@/components/energy/energy-chart"
 import { EnergyStats } from "@/components/energy/energy-stats"
 import { ThresholdAlert } from "@/components/energy/threshold-alert"
+import { AIPredictEnergy } from "@/components/energy/AI-predict-energy"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetchEnergyData, type EnergyData } from "@/lib/api"
 import { useSocket } from "@/context/SocketContext"
@@ -151,13 +152,15 @@ export default function EnergyPage() {
 
         {/* Threshold alert - takes 1 column */}
         <div>
+          {/* Hiển thị giá trị max current hiện tại và tên thiết bị */}
           <ThresholdAlert
-            // hiển thị giá trị max current hiện tại và tên thiết bị
             currentAmps={maxCurrentDevice.current}
             deviceName={maxCurrentDevice.deviceName}
           />
         </div>
       </div>
+      {/* AI Forecast Component */}
+      <AIPredictEnergy />
     </div>
   )
 }
