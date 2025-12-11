@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -29,6 +29,14 @@ export function ThresholdAlert({ currentAmps, deviceName }: ThresholdAlertProps)
   const percentage = thresholdValue >= 0 && !isNaN(thresholdValue) ? (currentAmps / thresholdValue) * 100 : 0
   const isOverThreshold = !isNaN(thresholdValue) && currentAmps >= thresholdValue
 
+  // Khi component mount, lấy từ LocalStorage ra
+  useEffect(() => {
+    const savedThreshold = localStorage.getItem(`threshold`)
+    if (savedThreshold) {
+      setThreshold(savedThreshold)
+    }
+  }, [deviceName])
+
   const handleSaveThreshold = () => {
     if (!socket || !isConnected) {
       toast({
@@ -51,6 +59,9 @@ export function ThresholdAlert({ currentAmps, deviceName }: ThresholdAlertProps)
 
     // Gửi ngưỡng lên Backend qua Socket
     socket.emit("set_alert_threshold", { threshold: value })
+
+    // Lưu vào LocalStorage
+    localStorage.setItem(`threshold`, value.toString())
 
     toast({
       title: "Đã lưu ngưỡng",

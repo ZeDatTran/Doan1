@@ -53,3 +53,38 @@ export function formatCurrency(value: number): string {
     currency: "VND",
   }).format(value)
 }
+
+/**
+ * Aggregate energy data by day for week/month views
+ * Groups hourly data into daily totals
+ */
+export function aggregateEnergyDataByDay(data: Array<{ timestamp: string; consumption: number; cost: number }>) {
+  const dailyMap = new Map<string, { consumption: number; cost: number; timestamp: string }>()
+
+  data.forEach((item) => {
+    // const date = new Date(item.timestamp)
+    // Use YYYY-MM-DD as key for grouping
+    const dayKey = item.timestamp.split('T')[0]
+
+    if (!dailyMap.has(dayKey)) {
+      dailyMap.set(dayKey, {
+        consumption: 0,
+        cost: 0,
+        timestamp: dayKey + 'T00:00:00'
+      })
+    }
+
+    const entry = dailyMap.get(dayKey)!
+    entry.consumption += item.consumption
+    entry.cost += item.cost
+  })
+
+  // Convert map to array and sort by date
+  return Array.from(dailyMap.values())
+    .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+    .map(item => ({
+      timestamp: item.timestamp,
+      consumption: Math.round(item.consumption * 100) / 100,
+      cost: Math.round(item.cost)
+    }))
+}
