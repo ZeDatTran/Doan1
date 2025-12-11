@@ -185,7 +185,6 @@ export default function DashboardPage() {
           title="Đang hoạt động"
           value={activeDevices}
           icon={<Icons.power className="h-6 w-6 text-green-500" />}
-          trend={{ value: 12, isPositive: true }}
         />
         <StatCard
           title="Đang online"
@@ -196,7 +195,6 @@ export default function DashboardPage() {
           title="Tổng công suất"
           value={`${totalPower}W`}
           icon={<Icons.energy className="h-6 w-6 text-yellow-500" />}
-          trend={{ value: 8, isPositive: false }}
         />
       </div>
 
