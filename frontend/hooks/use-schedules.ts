@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"
+
 export interface Schedule {
   id: string
   name: string
@@ -11,15 +13,15 @@ export interface Schedule {
   createdAt: string
 }
 
-// Note: The Flask backend doesn't have schedule endpoints yet
-// These hooks are placeholders for future schedule management features
-
 export function useSchedules() {
   return useQuery({
     queryKey: ["schedules"],
     queryFn: async () => {
-      // Placeholder: return empty array until backend schedules API is implemented
-      return [] as Schedule[]
+      const response = await fetch(`${API_BASE_URL}/schedules`)
+      if (!response.ok) {
+        throw new Error("Failed to fetch schedules")
+      }
+      return response.json() as Promise<Schedule[]>
     },
   })
 }
@@ -28,9 +30,18 @@ export function useCreateSchedule() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: Omit<Schedule, "id" | "createdAt">) => {
-      // TODO: Implement schedule creation endpoint
-      console.log("Schedule creation not yet implemented:", data)
-      return data
+      const response = await fetch(`${API_BASE_URL}/schedules`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || "Failed to create schedule")
+      }
+      return response.json() as Promise<Schedule>
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] })
@@ -42,9 +53,18 @@ export function useUpdateSchedule() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: Schedule) => {
-      // TODO: Implement schedule update endpoint
-      console.log("Schedule update not yet implemented:", data)
-      return data
+      const response = await fetch(`${API_BASE_URL}/schedules/${data.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || "Failed to update schedule")
+      }
+      return response.json() as Promise<Schedule>
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] })
@@ -56,9 +76,33 @@ export function useDeleteSchedule() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (id: string) => {
-      // TODO: Implement schedule delete endpoint
-      console.log("Schedule deletion not yet implemented:", id)
+      const response = await fetch(`${API_BASE_URL}/schedules/${id}`, {
+        method: "DELETE",
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || "Failed to delete schedule")
+      }
       return id
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["schedules"] })
+    },
+  })
+}
+
+export function useToggleSchedule() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`${API_BASE_URL}/schedules/${id}/toggle`, {
+        method: "POST",
+      })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || "Failed to toggle schedule")
+      }
+      return response.json() as Promise<Schedule>
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["schedules"] })

@@ -14,18 +14,30 @@ import random
 import hashlib
 from collections import defaultdict
 
-# === Forecast & DB Integration ===
+# === Database Integration ===
+from database import (
+    create_schedule, 
+    get_all_schedules, 
+    get_schedule_by_id,
+    update_schedule, 
+    delete_schedule, 
+    get_enabled_schedules
+)
+
+# === Forecast Integration ===
 try:
     from websocket_forecast import forecast_client
     from database import save_hourly_kwh
     FORECAST_ENABLED = True
 except ImportError:
-    print("WARNING: websocket_forecast.py or database.py not found. Running without forecast.")
+    print("WARNING: websocket_forecast.py not found. Running without forecast.")
     FORECAST_ENABLED = False
 
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+
+# Load environment variables
 
 # Load environment variables
 load_dotenv()
@@ -344,6 +356,95 @@ def periodic_data_logger():
             logging.warning("Periodic check: Cannot fetch data due to invalid token")
         time.sleep(10)
 
+# Map day abbreviations to weekday numbers (Monday = 0)
+DAY_MAP = {
+    'Mon': 0, 'Tue': 1, 'Wed': 2, 'Thu': 3, 
+    'Fri': 4, 'Sat': 5, 'Sun': 6
+}
+
+def schedule_executor():
+    """Background thread to execute scheduled actions."""
+    logging.info("Schedule executor started")
+    executed_today = {}  # Track executed schedules to avoid duplicates
+    
+    while True:
+        try:
+            now = datetime.now()
+            current_time = now.strftime('%H:%M')
+            current_day = list(DAY_MAP.keys())[now.weekday()]  # Get day abbreviation
+            today_key = now.strftime('%Y-%m-%d')
+            
+            # Clean up old entries from executed_today (reset daily)
+            keys_to_remove = [k for k in executed_today.keys() if not k.startswith(today_key)]
+            for k in keys_to_remove:
+                del executed_today[k]
+            
+            # Get all enabled schedules
+            schedules = get_enabled_schedules()
+            
+            for schedule in schedules:
+                schedule_key = f"{today_key}_{schedule['id']}_{schedule['time']}"
+                
+                # Check if this schedule should run now
+                if (schedule['time'] == current_time and 
+                    current_day in schedule['days'] and 
+                    schedule_key not in executed_today):
+                    
+                    logging.info(f"Executing schedule: {schedule['name']} - {schedule['action'].upper()} for {schedule['targetId']}")
+                    
+                    # Execute the scheduled action
+                    target_id = schedule['targetId']
+                    action = schedule['action'].upper()
+                    
+                    # Check if target is a device or all devices in group
+                    if target_id == 'all' or target_id == 'group':
+                        # Control all devices in group
+                        device_ids = get_devices_from_group()
+                        for device_id in device_ids:
+                            success, result = send_rpc_to_device(device_id, action)
+                            if success:
+                                logging.info(f"Schedule executed: {schedule['name']} -> {device_id} {action}")
+                            else:
+                                logging.error(f"Schedule failed for {device_id}: {result}")
+                            time.sleep(0.1)
+                    else:
+                        # Control single device
+                        success, result = send_rpc_to_device(target_id, action)
+                        if success:
+                            logging.info(f"Schedule executed: {schedule['name']} -> {target_id} {action}")
+                        else:
+                            logging.error(f"Schedule failed for {target_id}: {result}")
+                    
+                    # Mark as executed
+                    executed_today[schedule_key] = True
+                    
+                    # Emit execution event to connected clients
+                    socketio.emit('schedule_executed', {
+                        'scheduleId': schedule['id'],
+                        'scheduleName': schedule['name'],
+                        'targetId': target_id,
+                        'action': action,
+                        'executedAt': now.isoformat()
+                    }, room='schedules')
+                    
+                    # Also emit as activity log
+                    log_entry = {
+                        'id': f'log-{int(time.time() * 1000)}',
+                        'action': f'Lịch trình tự động: {schedule["name"]}',
+                        'deviceId': target_id,
+                        'deviceName': schedule['name'],
+                        'user': 'Scheduler',
+                        'timestamp': now.isoformat(),
+                        'details': f'{action} - {schedule["time"]}'
+                    }
+                    socketio.emit('activity_log', log_entry, room='logs')
+            
+        except Exception as e:
+            logging.error(f"Schedule executor error: {e}")
+        
+        # Check every 30 seconds
+        time.sleep(30)
+
 def start_websocket():
     """Start WebSocket connection for real-time updates."""
     ws_url = f"wss://app.coreiot.io/api/ws/plugins/telemetry?token={JWT_TOKEN}"
@@ -546,7 +647,7 @@ def home():
     if FORECAST_ENABLED:
         endpoints["/forecast"] = "Trigger AI forecast"
         endpoints["/forecast/summary"] = "Get simplified forecast result (Fast)"
-        endpoints["/hourly"] = "Get hourly kWh data"
+        endpoints["/energy"] = "Get hourly kWh data"
     
     return jsonify({
         "status": "success",
@@ -653,6 +754,157 @@ def control_group_devices(command):
     }
     
     return jsonify(summary), 200 if all_success else 207
+
+# === SCHEDULE ENDPOINTS ===
+
+@app.route('/schedules', methods=['GET'])
+def get_schedules():
+    """Get all schedules."""
+    try:
+        schedules = get_all_schedules()
+        return jsonify(schedules), 200
+    except Exception as e:
+        logging.error(f"Error fetching schedules: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/schedules', methods=['POST'])
+def create_new_schedule():
+    """Create a new schedule."""
+    try:
+        data = request.get_json()
+        
+        # Validate required fields
+        required_fields = ['name', 'targetId', 'action', 'time', 'days']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({"status": "error", "message": f"Missing required field: {field}"}), 400
+        
+        # Validate action
+        if data['action'] not in ['on', 'off']:
+            return jsonify({"status": "error", "message": "Action must be 'on' or 'off'"}), 400
+        
+        # Validate days
+        valid_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        if not isinstance(data['days'], list) or not all(d in valid_days for d in data['days']):
+            return jsonify({"status": "error", "message": "Days must be a list of valid day abbreviations"}), 400
+        
+        # Validate time format (HH:MM)
+        try:
+            datetime.strptime(data['time'], '%H:%M')
+        except ValueError:
+            return jsonify({"status": "error", "message": "Time must be in HH:MM format"}), 400
+        
+        enabled = data.get('enabled', True)
+        
+        schedule = create_schedule(
+            name=data['name'],
+            target_id=data['targetId'],
+            action=data['action'],
+            time=data['time'],
+            days=data['days'],
+            enabled=enabled
+        )
+        
+        logging.info(f"Schedule created: {schedule['id']} - {schedule['name']}")
+        
+        # Emit to connected clients
+        socketio.emit('schedule_created', schedule, room='schedules')
+        
+        return jsonify(schedule), 201
+        
+    except Exception as e:
+        logging.error(f"Error creating schedule: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/schedules/<string:schedule_id>', methods=['GET'])
+def get_single_schedule(schedule_id):
+    """Get a single schedule by ID."""
+    try:
+        schedule = get_schedule_by_id(schedule_id)
+        if schedule:
+            return jsonify(schedule), 200
+        return jsonify({"status": "error", "message": "Schedule not found"}), 404
+    except Exception as e:
+        logging.error(f"Error fetching schedule {schedule_id}: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/schedules/<string:schedule_id>', methods=['PUT'])
+def update_existing_schedule(schedule_id):
+    """Update an existing schedule."""
+    try:
+        data = request.get_json()
+        
+        # Validate action if provided
+        if 'action' in data and data['action'] not in ['on', 'off']:
+            return jsonify({"status": "error", "message": "Action must be 'on' or 'off'"}), 400
+        
+        # Validate days if provided
+        if 'days' in data:
+            valid_days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            if not isinstance(data['days'], list) or not all(d in valid_days for d in data['days']):
+                return jsonify({"status": "error", "message": "Days must be a list of valid day abbreviations"}), 400
+        
+        # Validate time if provided
+        if 'time' in data:
+            try:
+                datetime.strptime(data['time'], '%H:%M')
+            except ValueError:
+                return jsonify({"status": "error", "message": "Time must be in HH:MM format"}), 400
+        
+        schedule = update_schedule(
+            schedule_id=schedule_id,
+            name=data.get('name'),
+            target_id=data.get('targetId'),
+            action=data.get('action'),
+            time=data.get('time'),
+            days=data.get('days'),
+            enabled=data.get('enabled')
+        )
+        
+        if schedule:
+            logging.info(f"Schedule updated: {schedule_id}")
+            socketio.emit('schedule_updated', schedule, room='schedules')
+            return jsonify(schedule), 200
+            
+        return jsonify({"status": "error", "message": "Schedule not found"}), 404
+        
+    except Exception as e:
+        logging.error(f"Error updating schedule {schedule_id}: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/schedules/<string:schedule_id>', methods=['DELETE'])
+def delete_existing_schedule(schedule_id):
+    """Delete a schedule."""
+    try:
+        success = delete_schedule(schedule_id)
+        if success:
+            logging.info(f"Schedule deleted: {schedule_id}")
+            socketio.emit('schedule_deleted', {"id": schedule_id}, room='schedules')
+            return jsonify({"status": "success", "message": "Schedule deleted"}), 200
+        return jsonify({"status": "error", "message": "Schedule not found"}), 404
+    except Exception as e:
+        logging.error(f"Error deleting schedule {schedule_id}: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/schedules/<string:schedule_id>/toggle', methods=['POST'])
+def toggle_schedule(schedule_id):
+    """Toggle schedule enabled/disabled status."""
+    try:
+        schedule = get_schedule_by_id(schedule_id)
+        if not schedule:
+            return jsonify({"status": "error", "message": "Schedule not found"}), 404
+        
+        updated = update_schedule(schedule_id=schedule_id, enabled=not schedule['enabled'])
+        if updated:
+            logging.info(f"Schedule {schedule_id} toggled to {'enabled' if updated['enabled'] else 'disabled'}")
+            socketio.emit('schedule_updated', updated, room='schedules')
+            return jsonify(updated), 200
+            
+        return jsonify({"status": "error", "message": "Failed to toggle schedule"}), 500
+        
+    except Exception as e:
+        logging.error(f"Error toggling schedule {schedule_id}: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 # === FORECAST ENDPOINTS (if enabled) ===
 
@@ -847,6 +1099,18 @@ def handle_unsubscribe_devices():
     logging.info(f"Client {request.sid} unsubscribed from device updates")
     leave_room('device_updates')
 
+@socketio.on('join_schedules')
+def handle_join_schedules():
+    """Client join schedules room để nhận schedule updates realtime."""
+    join_room('schedules')
+    logging.info(f"Client {request.sid} joined room 'schedules'")
+    
+@socketio.on('leave_schedules')
+def handle_leave_schedules():
+    """Client leave schedules room."""
+    leave_room('schedules')
+    logging.info(f"Client {request.sid} left room 'schedules'")
+
 # === MAIN ===
 
 if __name__ == "__main__":
@@ -857,17 +1121,20 @@ if __name__ == "__main__":
     print(" Auto-Shutdown Enabled: True")
     print(" Activity Logs Enabled: True")
     print(" Realtime Alerts Enabled: True")
+    print(" Schedule Executor Enabled: True")
     print("=" * 60)
     
     # Start background threads
     threading.Thread(target=periodic_data_logger, daemon=True).start()
     threading.Thread(target=start_websocket, daemon=True).start()
+    threading.Thread(target=schedule_executor, daemon=True).start()
     
     # Initialize dummy data if forecast enabled
     if FORECAST_ENABLED:
         init_dummy_data()
     
     print("🔌 Server starting on http://0.0.0.0:5000")
+    print("📅 Schedule executor running...")
     print("=" * 60)
     
     # Run Socket.IO server
