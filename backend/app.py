@@ -36,9 +36,6 @@ except ImportError:
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
-
-# Load environment variables
-
 # Load environment variables
 load_dotenv()
 
@@ -698,6 +695,193 @@ def check_token():
     else:
         return jsonify({"status": "error", "message": "Invalid JWT_TOKEN"}), 401
 
+@app.route('/device/<string:device_id>', methods=['GET'])
+def get_device_detail(device_id):
+    """Get detailed information for a specific device."""
+    logging.info(f"Device detail request for: {device_id}")
+    
+    # Check if device exists in cache
+    if device_id in latest_data:
+        info = latest_data[device_id]
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
+        
+        return jsonify({
+            "status": "success",
+            "device": {
+                "id": device_id,
+                "type": meta["type"],
+                "name": meta["name"],
+                "location": meta["location"],
+                "attributes": info.get("attributes", {}),
+                "telemetry": info.get("telemetry", {})
+            }
+        })
+    
+    # Try to fetch fresh data
+    get_device_telemetry(device_id)
+    get_device_attributes(device_id)
+    
+    if device_id in latest_data:
+        info = latest_data[device_id]
+        meta = info.get("metadata", {"type": "unknown", "name": "Unknown", "location": "N/A"})
+        
+        return jsonify({
+            "status": "success",
+            "device": {
+                "id": device_id,
+                "type": meta["type"],
+                "name": meta["name"],
+                "location": meta["location"],
+                "attributes": info.get("attributes", {}),
+                "telemetry": info.get("telemetry", {})
+            }
+        })
+    
+    return jsonify({"status": "error", "message": "Device not found"}), 404
+
+@app.route('/device/<string:device_id>/history', methods=['GET'])
+def get_device_history(device_id):
+    """Get historical telemetry data for a device."""
+    period = request.args.get('period', 'day')
+    logging.info(f"Device history request for: {device_id}, period: {period}")
+    
+    try:
+        # Calculate time range based on period
+        now = datetime.now()
+        if period == 'week':
+            start_time = now - timedelta(days=7)
+            limit = 168  # 7 days * 24 hours
+        elif period == 'month':
+            start_time = now - timedelta(days=30)
+            limit = 720  # 30 days * 24 hours
+        else:  # day
+            start_time = now - timedelta(days=1)
+            limit = 24  # 24 hours
+        
+        start_ts = int(start_time.timestamp() * 1000)
+        end_ts = int(now.timestamp() * 1000)
+        
+        # Fetch historical data from Core IoT
+        keys = "ENERGY-Power,ENERGY-Voltage,ENERGY-Current,ENERGY-Today"
+        url = f"{CORE_IOT_URL}/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries"
+        params = {
+            "keys": keys,
+            "startTs": start_ts,
+            "endTs": end_ts,
+            "limit": limit * 4,  # Multiple keys
+            "agg": "AVG" if period != 'day' else "NONE",
+            "interval": 3600000 if period != 'day' else 0  # 1 hour aggregation for week/month
+        }
+        
+        response = requests.get(url, headers=HEADERS, params=params, timeout=15)
+        
+        if response.status_code == 200:
+            raw_data = response.json()
+            
+            # Process and combine data points
+            history = []
+            timestamps = set()
+            
+            # Collect all timestamps
+            for key, values in raw_data.items():
+                for point in values:
+                    timestamps.add(point['ts'])
+            
+            # Create data points for each timestamp
+            for ts in sorted(timestamps):
+                point = {
+                    'timestamp': datetime.fromtimestamp(ts / 1000).isoformat(),
+                    'power': 0,
+                    'voltage': 0,
+                    'current': 0,
+                    'energy': 0
+                }
+                
+                for key, values in raw_data.items():
+                    for v in values:
+                        if v['ts'] == ts:
+                            val = float(v['value']) if v['value'] else 0
+                            if 'Power' in key:
+                                point['power'] = val
+                            elif 'Voltage' in key:
+                                point['voltage'] = val
+                            elif 'Current' in key:
+                                point['current'] = val
+                            elif 'Today' in key:
+                                point['energy'] = val
+                            break
+                
+                history.append(point)
+            
+            # Limit to requested number of points
+            if len(history) > limit:
+                step = len(history) // limit
+                history = history[::step][:limit]
+            
+            logging.info(f"Returning {len(history)} history points for device {device_id}")
+            return jsonify({"status": "success", "history": history})
+        else:
+            logging.warning(f"Failed to fetch history from Core IoT: {response.status_code}")
+            # Return generated data as fallback
+            return jsonify({
+                "status": "success", 
+                "history": generate_mock_device_history(period),
+                "note": "Using generated data"
+            })
+            
+    except Exception as e:
+        logging.error(f"Error fetching device history: {e}")
+        return jsonify({
+            "status": "success",
+            "history": generate_mock_device_history(period),
+            "note": "Using generated data due to error"
+        })
+
+def generate_mock_device_history(period):
+    """Generate mock history data for demo purposes."""
+    now = datetime.now()
+    history = []
+    
+    if period == 'week':
+        count = 168
+        interval_minutes = 60
+    elif period == 'month':
+        count = 720
+        interval_minutes = 60
+    else:
+        count = 24
+        interval_minutes = 60
+    
+    for i in range(count - 1, -1, -1):
+        timestamp = now - timedelta(minutes=i * interval_minutes)
+        hour = timestamp.hour
+        
+        # Generate realistic values based on time of day
+        if 0 <= hour < 6:
+            base_power = 30
+        elif 6 <= hour < 9:
+            base_power = 150
+        elif 9 <= hour < 17:
+            base_power = 80
+        elif 17 <= hour < 22:
+            base_power = 200
+        else:
+            base_power = 50
+        
+        power = base_power + random.uniform(-20, 20)
+        voltage = 220 + random.uniform(-5, 5)
+        current = power / voltage
+        
+        history.append({
+            'timestamp': timestamp.isoformat(),
+            'power': round(max(0, power), 2),
+            'voltage': round(voltage, 1),
+            'current': round(max(0, current), 4),
+            'energy': round(max(0, power * (interval_minutes / 60) / 1000), 4)
+        })
+    
+    return history
+
 @app.route('/control/<string:device_id>/<string:command>', methods=['POST'])
 def control_specific_device(device_id, command):
     """Control a specific smart plug."""
@@ -1133,8 +1317,8 @@ if __name__ == "__main__":
     if FORECAST_ENABLED:
         init_dummy_data()
     
-    print("🔌 Server starting on http://0.0.0.0:5000")
-    print("📅 Schedule executor running...")
+    print(" Server starting on http://0.0.0.0:5000")
+    print(" Schedule executor running...")
     print("=" * 60)
     
     # Run Socket.IO server

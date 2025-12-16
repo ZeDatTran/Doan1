@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { fetchDevices, controlDevice } from "@/lib/api-client"
+import { fetchDevices, controlDevice, fetchDeviceById, fetchDeviceHistory } from "@/lib/api-client"
 import type { Device as BackendDevice } from "@/lib/api-client"
 
 // Extended device interface with UI-specific fields
@@ -10,6 +10,14 @@ export interface Device extends BackendDevice {
   status?: "online" | "offline"
   power?: number
   lastUpdate?: string
+}
+
+export interface DeviceHistoryPoint {
+  timestamp: string
+  power: number
+  voltage: number
+  current: number
+  energy: number
 }
 
 export function useDevices() {
@@ -35,6 +43,38 @@ export function useDevices() {
         lastUpdate: new Date().toISOString(),
       } as Device))
     },
+  })
+}
+
+export function useDevice(deviceId: string) {
+  return useQuery({
+    queryKey: ["device", deviceId],
+    queryFn: async () => {
+      const device = await fetchDeviceById(deviceId)
+      if (!device) return null
+      return {
+        ...device,
+        name: device.type && device.location 
+          ? `${device.type.charAt(0).toUpperCase() + device.type.slice(1)} - ${device.location}`
+          : device.type || "Thiết bị",
+        status: device.attributes?.POWER === "ON" ? "online" : "offline",
+        power: device.attributes?.POWER === "ON" ? 1 : 0,
+        lastUpdate: new Date().toISOString(),
+      } as Device
+    },
+    enabled: !!deviceId,
+    refetchInterval: 5000, // Refetch every 5 seconds for real-time updates
+  })
+}
+
+export function useDeviceHistory(deviceId: string, period: string = "day") {
+  return useQuery({
+    queryKey: ["device", deviceId, "history", period],
+    queryFn: async () => {
+      return fetchDeviceHistory(deviceId, period)
+    },
+    enabled: !!deviceId,
+    refetchInterval: 30000, // Refetch every 30 seconds
   })
 }
 
